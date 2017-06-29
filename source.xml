@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<website>
+    <page id="1">
+        <menu>Accueil</menu>
+        <title>Accueil | Annalium Statera</title>
+        <content>
+<![CDATA[
+               <div id="intro" class="content">
+<h2>Synopsis</h2>
+                  <p>
+                     Depuis la nuit des temps, l'équilibre est assuré par deux forces inébranlables
+                     échouées sur la Terre et qui ont permis l'émergence de la vie.
+                  </p>
+                  <p>
+                     Avec l'évolution, ces deux forces se sont incarnées en prenant forme humaine
+                     et assurent leur pérennité par la constitution de deux dynasties dont les premiers
+                     héritiers connus sont <b>Daiken</b> &amp; <b>Andra</b>.
+                     Ces mêmes noms deviendront les patronymes des dynasties pour toutes les générations à venir.
+                  </p>
+                  <p>
+                     Mais au XXe siècle, un événement dramatique poussera les héritiers à changer de
+                     noms ; <b>Daiken</b> devenant <b>Parker</b> et <b>Andra</b> devenant <b>Kayazaki</b>.
+                  </p>
+               </div>
+]]>
+        </content>
+    </page>
+    <page id="2">
+        <menu>Récits</menu>
+        <title>Récits | Annalium Statera</title>
+        <content>
+<![CDATA[
+<h2>Récits</h2>
+]]>
+        </content>
+    </page>
+    <page id="3">
+        <menu>Personnages</menu>
+        <title>Personnages | Annalium Statera</title>
+        <content>
+<![CDATA[
+<h2>Les personnages</h2>
+               <div class="content portraits">
+                  <img src="assets/img/portraits/pazzia.png" alt="Pazzia"/>
+                  <img src="assets/img/portraits/tashikaya.png" alt="Tashikaya"/>
+               </div>
+]]>
+        </content>
+    </page>
+    <page id="4">
+        <menu>Galerie</menu>
+        <title>Galerie | Annalium Statera</title>
+        <content>
+<![CDATA[
+<h2>Galerie</h2>
+                  <img src="assets/img/takaDoll.png" alt="Takahomé &amp; doll">
+]]>
+        </content>
+    </page>
+    <page id="5">
+        <menu>Références</menu>
+        <title>Références | Annalium Statera</title>
+        <content>
+<![CDATA[
+<h2>Références</h2>    
+]]>
+        </content>
+    </page>
+</website>
