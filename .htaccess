@@ -1,0 +1,10 @@
+# Si le mod_rewrite est actif alors nous pouvons réécrire l'URL 
+<IfModule mod_rewrite.c>
+Options +FollowSymlinks
+RewriteEngine On
+# Correspond à la ligne des règles de réécriture de l'URL : j'écris une regex comprennant une variable ([0-9]+) 
+# stockée dans $1 car c'est la première rencontrée. Cette écriture remplacera notre écriture d'origine = 
+# index.php?pageNumber = n
+RewriteRule home.html index.php?pageNumber=1
+RewriteRule characters.html index.php?pageNumber=3
+</IfModule>
