@@ -1,0 +1,34 @@
+.rel-select{
+    color: #333;
+}
+.portraits{
+}
+.portraits img{
+    padding: auto;
+    margin-top: 10px;
+    height: 150px;
+    border: 10px ridge goldenrod;
+    border-radius: 100%;
+}
+.characters{
+    text-align: center;
+    border: 1px solid #fff;
+}
+#chara{
+    display: none;
+    margin: auto;
+}
+/*#taka{
+    position: relative;
+    display: none;
+    width: 100%;
+}
+#taka img{
+    height: 25em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 10px ridge goldenrod;
+    border-radius: 100%;
+    border-image: url(../img/cadre.png) 30 stretch;
+}*/

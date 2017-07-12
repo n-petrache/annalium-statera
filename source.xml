@@ -39,10 +39,33 @@
         <title>Personnages | Annalium Statera</title>
         <content>
 <![CDATA[
-<h2>Les personnages</h2>
+               <h2>Les personnages</h2>
+               <div class="col-xs-12">
+                  <form action="index.php" method="POST" class="rel-select">
+                     <select name="religions" onchange="form.submit()">
+                        <option value="0">Tous les personnages</option>
+                        <?php
+                        foreach ($religionsList as $religion) {
+                            //Dans l'option on vérifie grâce à un ternaire que la valeur passée en POST($characters->religionId) est égale à l'option.
+                            ?>     
+                            <option value="<?= $religion->id ?>" <?= $religion->id == $characters->religionId ? 'selected' : '' ?>><?= $religion->name ?></option>
+                            <?php
+                        }
+                        ?>
+                     </select>
+                  </form>
+               </div>
                <div class="content portraits">
-                  <img src="assets/img/portraits/pazzia.png" alt="Pazzia"/>
-                  <img src="assets/img/portraits/tashikaya.png" alt="Tashikaya"/>
+                  <?php
+                  foreach ($charaList as $chara) {
+                      ?>
+                  <div class="characters col-xs-12 col-lg-2">
+                     <img src="assets/img/portraits/<?= $chara->portraitFile ?>" alt="<?= $chara->firstName ?>"/><br>
+                         <span><?= $chara->firstName ?></span>
+                      </div>
+                      <?php
+                  }
+                  ?>
                </div>
 ]]>
         </content>

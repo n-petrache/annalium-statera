@@ -1,5 +1,5 @@
 /*Navbar*/
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .side-collapse-container{
         width:100%;
         position:relative;
@@ -27,4 +27,7 @@
 }
 .nav.navbar-nav li a{
     color: #ddd;
+}
+.nav.navbar-nav .dropdown-menu li a{
+    color: #333;
 }

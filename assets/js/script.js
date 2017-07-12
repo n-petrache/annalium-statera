@@ -1,13 +1,15 @@
 /*
- En cliquant sur la section Gallerie/Personnages :
- la div #taka perd sa class "content"
- la div #intro disparaît en glissant,
- et la div #taka apparaît en glissant
+ En cliquant sur un portrait de personnage :
+ la div .characters disparaît en glissant,
+ et la div #chara apparaît en glissant
  */
-$("#gal-chara").click(function () {
-    $("#taka").removeClass("content");
-    $(".content").slideUp();
-    $("#taka").slideDown();
+$(".characters").click(function () {
+    $(".characters").slideUp();
+    $("#chara").slideDown();
+});
+$(".back").click(function () {
+    $("#chara").slideUp();
+    $(".characters").slideDown();
 });
 $(document).ready(function () {
     var sideslider = $('[data-toggle=collapse-side]');

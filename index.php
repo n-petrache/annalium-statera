@@ -4,17 +4,15 @@ session_start();
 include_once 'config.php';
 include_once 'class/database.php';
 include_once 'model/users.php';
-//include_once 'model/characters.php';
+include_once 'model/characters.php';
+include_once 'model/astroSigns.php';
+include_once 'model/religions.php';
+include_once 'model/castes.php';
+include_once 'lang/FR_FR.php';
 include_once 'controller/inscriptionCtrl.php';
 include_once 'controller/connectionCtrl.php';
-//include_once $lang;
-/* Si les champs du formulaire ne sont pas vides, 
- * les cookies créés stockent les infos renseignées */
-$_SESSION['pseudoC'] = $users->login;
-if (isset($_POST['pseudoC']) && isset($_POST['passwordC'])) { //path, domain, secure, httponly (search setcookie on php.net)
-    setcookie('login', $_POST['pseudoC'], time() + 365 * 24 * 3600, '/', null, false, true);
-    setcookie('password', $_POST['passwordC'], time() + 365 * 24 * 3600, '/', null, false, true);
-}
+include_once 'controller/charaCtrl.php';
+include_once 'controller/addCharaCtrl.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +21,8 @@ if (isset($_POST['pseudoC']) && isset($_POST['passwordC'])) { //path, domain, se
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
       <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
       <link href="assets/css/navbar.css" rel="stylesheet" type="text/css"/>
-      <title><?= $xml->page[$pageNumber]->title ?></title>
+      <link href="assets/css/characters.css" rel="stylesheet" type="text/css"/>
+      <title>Annalium Statera</title>
    </head>
    <body>
       <header>
@@ -41,10 +40,10 @@ if (isset($_POST['pseudoC']) && isset($_POST['passwordC'])) { //path, domain, se
             <div class="navbar-inverse side-collapse in">
                <nav role="navigation" class="navbar-collapse">
                   <ul class="nav navbar-nav">
-                     <li><a href="home.html" class="glyphicon glyphicon-home"></a></li>
+                     <li><a href="?page=accueil" class="glyphicon glyphicon-home"></a></li>
                      <li><a href="#">Récits</a></li>
                      <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="dissidents.html">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="?page=characters">
                            Personnages<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -52,7 +51,7 @@ if (isset($_POST['pseudoC']) && isset($_POST['passwordC'])) { //path, domain, se
                            <li><a href="#">Eveillés</a></li>
                            <li><a href="#">Dissidents</a></li>
                            <li><a href="#">Autres</a></li>
-                           <li><a href="characters.html">Tous</a></li>
+                           <li><a href="?page=characters">Tous</a></li>
                         </ul>
                      </li>
                      <li class="dropdown">
@@ -75,21 +74,29 @@ if (isset($_POST['pseudoC']) && isset($_POST['passwordC'])) { //path, domain, se
             <div id="top-bar">
                <!-- Trigger the modal with a button -->
                <div class="btn-group">
-                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#connection">Connexion</button>
-                  <?php
-                  //Affichage du message de bienvenue si la connexion est réussie
-                  if ($connectionOk) {
+                   <?php
+                   //Affichage du bouton de connexion si celle-ci n'est pas encore effectuée
+                   if (!isset($_SESSION['pseudoC'])) {
+                       ?>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#connection">Connexion</button>
+                      <?php
+                  }
+                  //Affichage des boutons de déconnexion et d'inscription d'un nouveau membre si la connexion est réussie
+                  if (isset($_SESSION['pseudoC'])) {
                       ?>
-                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#inscription">Inscription</button>
+                      <form method="POST" action="#">
+                         <button type="submit" class="btn btn-primary" name="disconnection">Déconnexion</button>
+                      </form>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscription">Inscrire un nouveau membre</button>
                       <?php
                   }
                   ?>
                </div>
                <?php
                //Affichage du message de bienvenue si la connexion est réussie
-               if ($connectionOk) {
+               if (isset($_SESSION['pseudoC'])) {
                    ?>
-                   <p id="welcome">Bienvenue <?= $users->login ?></p>
+                   <p id="welcome">Bienvenue <?= $_SESSION['pseudoC'] ?></p>
                    <?php
                }
                ?>
@@ -106,7 +113,7 @@ if (isset($_POST['pseudoC']) && isset($_POST['passwordC'])) { //path, domain, se
                         </div>
                         <div class="modal-body">
                            <div class="row">
-                              <form method="POST" action="#">
+                              <form method="POST" action="index.php">
                                  <div class="row">
                                     <div class="col-sm-offset-1 col-sm-3 text-center">
                                        <label for="pseudoC">Pseudo :</label>
@@ -183,7 +190,23 @@ if (isset($_POST['pseudoC']) && isset($_POST['passwordC'])) { //path, domain, se
                </div>
             </div>
             <div id="main-window" class="col-md-offset-1 col-md-10">
-               <?= $xml->page[$pageNumber]->content ?>
+               <?php
+               $page = isset($_GET['page']) ? $_GET['page'] : "accueil";
+               $nom_page = $page . ".php";
+               $rep = "./";
+               $dir = opendir($rep);
+               $page_exist = 0;
+               while (FALSE !== ($file = readdir($dir))) {
+                   if ($file == $nom_page) {
+                       $page_exist = 1;
+                   }
+               }
+               if ($page_exist == 1) {
+                   include_once($nom_page);
+               } else {
+                   include_once("accueil.php");
+               }
+               ?>
             </div>
             <!--<img id="Noya" src="assets/img/wind.png" alt="Noya-Maï"/>-->
          </div>
@@ -194,9 +217,20 @@ if (isset($_POST['pseudoC']) && isset($_POST['passwordC'])) { //path, domain, se
          </a>-->
          <span>&copy; Noya-Maï</span>
       </footer>
-      <!-- -->
       <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
       <script src="assets/js/script.js" type="text/javascript"></script>
    </body>
 </html>
+<?php
+if (isset($_POST['disconnection'])) {
+////Fermeture de la session sans détruire les données
+//    session_write_close();
+// Détruit les données de la session
+    session_unset();
+// Détruit les variables de session
+    session_destroy();
+//// On redirige le visiteur vers la page d'accueil
+//    header('location: index.php');
+}
+?>

@@ -12,7 +12,8 @@ if (isset($_POST['connection'])) {
     $users->login = strip_tags($_POST['pseudoC']);
     //On utilise notre méthode getHashByUser pour récupérer le hash stocké dans notre base
     $users->getHashByUser();
-    //On vérifie que le mot de passe saisi et le mot de passe présent dans la base sont les même grâce à password_verify
+    //On vérifie que le mot de passe saisi et le mot de passe présent dans la base sont les mêmes grâce à password_verify
     $connectionOk = password_verify($_POST['passwordC'], $users->password);
+    $_SESSION['pseudoC'] = $users->login;
 }
 ?>

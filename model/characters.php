@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modèle de la table users.
+ * Modèle de la table characters.
  * Ce modèle est la réplique de la table.
  * Ici je la déclare
  * Le mot clé extends permet de dire que la classe users hérite de la classe database
@@ -14,15 +14,15 @@ class characters extends database {
      * @var type 
      */
     public $id = 0;
-    public $lastName = '';
+    public $lastName = 'Inconnu';
     public $firstName = '';
     public $age = 0;
     public $birthday = '';
     public $astroSignId = 0;
     public $religionId = 0;
     public $casteId = 0;
-    public $portraitLink = '';
-    public $description = '';
+    public $portraitFile = '';
+    public $description = 'Néant';
 
     /**
      * Déclaration de la méthode magique construct.
@@ -34,43 +34,44 @@ class characters extends database {
     }
 
     /**
-     * Méthode permettant de récupérer la liste des utilisateurs de la table users.
+     * Méthode permettant de récupérer la liste des personnagess de la table characters.
      * @return Array
      */
     public function getCharaByReligion() {
-        $q = 'SELECT `us`.`id`, '
-                . 'CONCAT(`us`.`lastName`," ", `us`.`firstName`) AS `name`, '
-                . '`birthDate`, '
-                . 'CONCAT(`us`.`address`," ", `us`.`postalCode`) AS `address`, '
-                . '`us`.`phoneNumber`, '
-                . '`dep`.`name` AS `serviceName` '
-                . 'FROM `tppdo1_users` AS `us` '
-                . 'INNER JOIN `tppdo1_departments` AS `dep` '
-                . 'ON `us`.`id_tppdo1_departments` = `dep`.`id`';
+//        $q = 'SELECT `us`.`id`, '
+//                . 'CONCAT(`us`.`lastName`," ", `us`.`firstName`) AS `name`, '
+//                . '`birthDate`, CONCAT(`us`.`address`," ", `us`.`postalCode`) AS `address`, '
+//                . '`us`.`phoneNumber`, `dep`.`name` AS `serviceName` '
+//                . 'FROM `tppdo1_users` AS `us` '
+//                . 'INNER JOIN `tppdo1_departments` AS `dep` ON `us`.`id_tppdo1_departments` = `dep`.`id`';
         $query = 'SELECT `chara`.`id`, `chara`.`lastName`, `chara`.`firstName`, '
                 . '`chara`.`age`, `chara`.`birthday`, '
                 . '`chara`.`astroSignId`, `chara`.`religionId`, `chara`.`casteId`, '
-                . '`chara`.`portraitLink`, `chara`.`description`, '
-                . '`astro`.`name`, '
-                . '`rel`.`name`, '
-                . '`cas`.`name` '
+                . '`chara`.`portraitFile`, `chara`.`description`, '
+                . '`ast`.`name` AS `astroSign`, '
+                . '`rel`.`name` AS `religion`, '
+                . '`cas`.`name` AS `caste` '
                 . 'FROM `annaliumStatera_characters` AS `chara` '
-                . 'INNER JOIN `annaliumStatera_astroSigns` AS `astro` ON `astro`.`id`=`chara`.`astroSignId`'
-                . 'INNER JOIN `annaliumStatera_religions` AS `rel` ON `rel`.`id`=`chara`.`religionId` '
-                . 'INNER JOIN `annaliumStatera_castes` AS `cas` ON `cas`.`id`=`chara`.`casteId`';
+                . 'LEFT JOIN `annaliumStatera_astroSigns` AS `ast` ON `ast`.`id`=`chara`.`astroSignId` '
+                . 'LEFT JOIN `annaliumStatera_religions` AS `rel` ON `rel`.`id`=`chara`.`religionId` '
+                . 'LEFT JOIN `annaliumStatera_castes` AS `cas` ON `cas`.`id`=`chara`.`casteId` ';
         if ($this->religionId == 0) {
             $queryResult = $this->pdo->query($query);
         } else {
-            $query .= ' WHERE `religionId` = :religionId';
+            $query .= ' WHERE `astroSignId` = :astroSignId '
+                    . 'OR `religionId` = :religionId '
+                    . 'OR `casteId` = :casteId';
             $queryResult = $this->pdo->prepare($query);
+            $queryResult->bindValue(':astroSignId', $this->astroSignId, PDO::PARAM_INT);
             $queryResult->bindValue(':religionId', $this->religionId, PDO::PARAM_INT);
+            $queryResult->bindValue(':casteId', $this->casteId, PDO::PARAM_INT);
             $queryResult->execute();
         }
         return $queryResult->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**
-     * Methode permettant de supprimer un utilisateur
+     * Methode permettant de supprimer un personnage
      * @return boolean
      */
     public function deleteChara() {
@@ -81,56 +82,68 @@ class characters extends database {
     }
 
     /**
-     * Methode permettant d'ajouter un nouvel utilisateur
+     * Methode permettant d'ajouter un nouvel personnage
      * @return boolean
      */
     public function addChara() {
-        $query = 'INSERT INTO `tppdo1`.`tppdo1_users` (`id`, `lastName`, `firstName`, `birthDate`, `address`, `postalCode`, `phoneNumber`, `id_tppdo1_departments`) '
-                . 'VALUES (NULL, UPPER(:lastName), :firstName, STR_TO_DATE(:birthDate, \'%d/%m/%Y\'), :address, :postalCode, REPLACE(:phoneNumber, \'.\',\'\'), :id_tppdo1_departments);';
+        $query = 'INSERT INTO `annaliumStatera_characters` (`id`, `lastName`, `firstName`, `age`, `birthday`, `astroSignId`, `religionId`, `casteId`, `portraitFile`, `description`) '
+                . 'VALUES (NULL, :lastName, :firstName, :age, :birthday, :astroSignId, :religionId, :casteId, :portraitFile, :description);';
         $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':lastName', $this->lastName, PDO::PARAM_STR);
         $queryResult->bindValue(':firstName', $this->firstName, PDO::PARAM_STR);
-        $queryResult->bindValue(':birthDate', $this->birthDate, PDO::PARAM_STR);
-        $queryResult->bindValue(':address', $this->address, PDO::PARAM_STR);
-        $queryResult->bindValue(':postalCode', $this->postalCode, PDO::PARAM_STR);
-        $queryResult->bindValue(':phoneNumber', $this->phoneNumber, PDO::PARAM_STR);
-        $queryResult->bindValue(':id_tppdo1_departments', $this->id_tppdo1_departments, PDO::PARAM_INT);
+        $queryResult->bindValue(':age', $this->age, PDO::PARAM_INT);
+        $queryResult->bindValue(':birthday', $this->birthday, PDO::PARAM_STR);
+        $queryResult->bindValue(':astroSignId', $this->astroSignId, PDO::PARAM_INT);
+        $queryResult->bindValue(':religionId', $this->religionId, PDO::PARAM_INT);
+        $queryResult->bindValue(':casteId', $this->casteId, PDO::PARAM_INT);
+        $queryResult->bindValue(':portraitFile', $this->portraitFile, PDO::PARAM_STR);
+        $queryResult->bindValue(':description', $this->description, PDO::PARAM_STR);
         return $queryResult->execute();
     }
 
     /**
-     * Méthode qui permet de récupérer les informations d'un utilisateur.
+     * Méthode qui permet de récupérer les informations d'un personnage
      * @return boolean
      */
     public function getCharaById() {
-        $query = 'SELECT `lastName`, `firstName`, DATE_FORMAT(`birthDate`,\'%d/%m/%Y\') AS `birthDate`, `address`, `postalCode`, `phoneNumber`, `id_tppdo1_departments` FROM `annaliumStatera_characters` WHERE `id` = :id';
+        $query = 'SELECT `lastName`, `firstName`, `age`, `birthday`, `astroSignId`, `religionId`, `casteId`, `portraitFile`, `description` '
+                . 'FROM `annaliumStatera_characters` WHERE `id` = :id';
         $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':id', $this->id, PDO::PARAM_INT);
         if ($queryResult->execute()) {
             $userResult = $queryResult->fetch(PDO::FETCH_OBJ);
-            $this->address = $userResult->address;
             $this->lastName = $userResult->lastName;
             $this->firstName = $userResult->firstName;
-            $this->birthDate = $userResult->birthDate;
-            $this->phoneNumber = $userResult->phoneNumber;
-            $this->postalCode = $userResult->postalCode;
-            $this->id_tppdo1_departments = $userResult->id_tppdo1_departments;
+            $this->age = $userResult->age;
+            $this->birthday = $userResult->birthday;
+            $this->astroSignId = $userResult->astroSignId;
+            $this->religionId = $userResult->religionId;
+            $this->casteId = $userResult->casteId;
+            $this->portraitFile = $userResult->portraitFile;
+            $this->description = $userResult->description;
             return true;
         } else {
             return false;
         }
     }
 
+    /**
+     * Méthode permettant de modifier un personnage
+     * @return type
+     */
     public function modifyChara() {
-        $query = 'UPDATE `annaliumStatera_characters` SET `lastName` = UPPER(:lastName), `firstName` = :firstName, `birthDate` = STR_TO_DATE(:birthDate, \'%d/%m/%Y\'), `address` = :address, `postalCode` = :postalCode, `phoneNumber` = REPLACE(:phoneNumber, \'.\',\'\'), `id_tppdo1_departments` = :id_tppdo1_departments WHERE `id` = :id ';
+        $query = 'UPDATE `annaliumStatera_characters` '
+                . 'SET `lastName` = :lastName, `firstName` = :firstName, `age` = :age, `birthday` = :birthday, `id_tppdo1_departments` = :id_tppdo1_departments, `id_tppdo1_departments` = :id_tppdo1_departments, `id_tppdo1_departments` = :id_tppdo1_departments, `portraitFile` = :portraitFile, `description` = :description WHERE `id` = :id ';
         $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':lastName', $this->lastName, PDO::PARAM_STR);
         $queryResult->bindValue(':firstName', $this->firstName, PDO::PARAM_STR);
-        $queryResult->bindValue(':birthDate', $this->birthDate, PDO::PARAM_STR);
-        $queryResult->bindValue(':address', $this->address, PDO::PARAM_STR);
-        $queryResult->bindValue(':postalCode', $this->postalCode, PDO::PARAM_STR);
-        $queryResult->bindValue(':phoneNumber', $this->phoneNumber, PDO::PARAM_STR);
-        $queryResult->bindValue(':id_tppdo1_departments', $this->id_tppdo1_departments, PDO::PARAM_INT);
+        $queryResult->bindValue(':age', $this->age, PDO::PARAM_INT);
+        $queryResult->bindValue(':birthday', $this->birthday, PDO::PARAM_STR);
+        $queryResult->bindValue(':astroSignId', $this->astroSignId, PDO::PARAM_INT);
+        $queryResult->bindValue(':religionId', $this->religionId, PDO::PARAM_INT);
+        $queryResult->bindValue(':casteId', $this->casteId, PDO::PARAM_INT);
+        $queryResult->bindValue(':portraitFile', $this->portraitFile, PDO::PARAM_STR);
+        $queryResult->bindValue(':description', $this->description, PDO::PARAM_STR);
         $queryResult->bindValue(':id', $this->id, PDO::PARAM_INT);
         return $queryResult->execute();
     }

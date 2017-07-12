@@ -50,6 +50,9 @@ header{
 /*.btn{
     border-radius: 0;
 }*/
+.modal-content .modal-header{
+    background-color: #222;
+}
 #welcome{
     float: right;
     margin: 10px;
@@ -66,8 +69,6 @@ header{
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 3px;
 }
-div[id="intro"]{
-}
 h2{
     font-size: 30px;
     margin-bottom: 40px;
@@ -78,30 +79,7 @@ div[id="intro"] p{
     font-size: 20px;
     text-indent: 30px;
 }
-.portraits{
-    margin-left: auto;
-    margin-right: auto;
-}
-.portraits img{
-    height: 150px;
-    border: 10px ridge goldenrod;
-    border-radius: 100%;
-}
-/*#taka{
-    position: relative;
-    display: none;
-    width: 100%;
-}
-#taka img{
-    height: 25em;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    border: 10px ridge goldenrod;
-    border-radius: 100%;
-    border-image: url(../img/cadre.png) 30 stretch;
-}
-#Noya{
+/*#Noya{
     height: 25em;
     border-radius: 50%;
     display: block;
@@ -135,3 +113,13 @@ footer{
     box-shadow: 0 0.3em 0.5em #000 inset met l'ombre à l'intérieur du bloc;
     text-shadow: 0 0.3em 0.2em #000;
 }*/
+@media screen and (max-width: 767px){
+    #main-window{
+        padding: 10px;
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+    #main-window{
+        padding-top: 10px;
+    }
+}
