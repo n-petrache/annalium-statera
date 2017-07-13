@@ -42,27 +42,8 @@ include_once 'controller/addCharaCtrl.php';
                   <ul class="nav navbar-nav">
                      <li><a href="?page=accueil" class="glyphicon glyphicon-home"></a></li>
                      <li><a href="#">Récits</a></li>
-                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="?page=characters">
-                           Personnages<span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                           <li><a href="#">Equilibrés</a></li>
-                           <li><a href="#">Eveillés</a></li>
-                           <li><a href="#">Dissidents</a></li>
-                           <li><a href="#">Autres</a></li>
-                           <li><a href="?page=characters">Tous</a></li>
-                        </ul>
-                     </li>
-                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Galerie
-                           <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                           <li><a href="#">Personnages</a></li>
-                           <li><a href="#">Lieux</a></li>
-                           <li><a href="#">Scènes</a></li>
-                        </ul>
-                     </li>
+                     <li><a href="?page=characters">Personnages</a></li>
+                     <li><a href="#">Galerie</a></li>
                      <li><a href="#">Références</a></li>
                   </ul>
                </nav>

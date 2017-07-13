@@ -5,10 +5,10 @@
  */
 $(".characters").click(function () {
     $(".characters").slideUp();
-    $("#chara").slideDown();
+    $(this).next(".chara").slideDown();
 });
 $(".back").click(function () {
-    $("#chara").slideUp();
+    $(".chara").slideUp();
     $(".characters").slideDown();
 });
 $(document).ready(function () {

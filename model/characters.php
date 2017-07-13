@@ -15,13 +15,13 @@ class characters extends database {
      */
     public $id = 0;
     public $lastName = 'Inconnu';
-    public $firstName = '';
+    public $firstName = 'Inconnu';
     public $age = 0;
-    public $birthday = '';
+    public $birthday = 'Inconnue';
     public $astroSignId = 0;
     public $religionId = 0;
     public $casteId = 0;
-    public $portraitFile = '';
+    public $portraitFile = 'Néant';
     public $description = 'Néant';
 
     /**
@@ -133,7 +133,7 @@ class characters extends database {
      */
     public function modifyChara() {
         $query = 'UPDATE `annaliumStatera_characters` '
-                . 'SET `lastName` = :lastName, `firstName` = :firstName, `age` = :age, `birthday` = :birthday, `id_tppdo1_departments` = :id_tppdo1_departments, `id_tppdo1_departments` = :id_tppdo1_departments, `id_tppdo1_departments` = :id_tppdo1_departments, `portraitFile` = :portraitFile, `description` = :description WHERE `id` = :id ';
+                . 'SET `lastName` = :lastName, `firstName` = :firstName, `age` = :age, `birthday` = :birthday, `astroSignId` = :astroSignId, `religionId` = :religionId, `casteId` = :casteId, `portraitFile` = :portraitFile, `description` = :description WHERE `id` = :id ';
         $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':lastName', $this->lastName, PDO::PARAM_STR);
         $queryResult->bindValue(':firstName', $this->firstName, PDO::PARAM_STR);

@@ -18,26 +18,26 @@
 //Affichage du bouton d'ajout d'un personnage si la connexion est faite
 if (isset($_SESSION['pseudoC'])) {
     ?>
-    <a href="addChara.php">Ajouter un personnage</a>
+    <a class="btn btn-info" href="addChara.php">Ajouter un personnage</a>
     <?php
 }
 ?>
-<div class="content portraits">
+<div class="container-fluid portraits">
     <?php
     foreach ($charaList as $chara) {
         ?>
-       <div class="characters col-xs-12 col-lg-offset-1 col-lg-2">
-          <img src="assets/img/portraits/<?= $chara->portraitFile ?>" alt="<?= $chara->firstName ?>"/><br>
+       <div class="characters col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <img src="assets/img/portraits/<?= $chara->portraitFile == 'Néant' ? 'no-image.png' : $chara->portraitFile ?>" alt="<?= $chara->firstName ?>"/><br>
           <span><?= $chara->firstName ?></span>
        </div>
-       <div id="chara">
+       <div class="chara">
           <h3><?=
               $chara->firstName;
               if ($chara->lastName != NULL && $chara->lastName != 'Inconnu') {
                   echo ' ' . $chara->lastName;
               }
               ?></h3>
-          <img src="assets/img/portraits/<?= $chara->portraitFile ?>" />
+          <img src="assets/img/portraits/<?= $chara->portraitFile == 'Néant' ? 'no-image.png' : $chara->portraitFile ?>" />
           <p>Age : 
               <?php
               if ($chara->age != NULL && $chara->age != 0) {

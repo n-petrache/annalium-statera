@@ -68,6 +68,7 @@ header{
     margin-top: 20px;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 3px;
+    height: auto;
 }
 h2{
     font-size: 30px;
@@ -121,5 +122,6 @@ footer{
 @media screen and (min-width: 768px) and (max-width: 991px){
     #main-window{
         padding-top: 10px;
+        padding-bottom: 10px;
     }
 }

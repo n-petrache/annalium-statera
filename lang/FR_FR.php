@@ -25,13 +25,15 @@ define('ADDCHARA_ERROR_FIRSTNAME'
 define('ADDCHARA_ERROR_AGE'
         ,'L\'âge que vous avez renseigné est invalide.');
 define('ADDCHARA_ERROR_BIRTHDAY'
-        ,'La date de naissance que vous avez renseignée est invalide. Veuillez respecter le format \"1er Janvier\", \"2 Février\" etc.');
+        ,'La date de naissance que vous avez renseignée est invalide. Veuillez respecter le format "1er Janvier", "2 Février" etc.');
 define('ADDCHARA_ERROR_POSTALCODE'
         ,'Le code postal que vous avez renseigné est invalide. Il doit comporter 5 chiffres ou au moins 4 chiffres et une lettre');
 define('ADDCHARA_ERROR_PHONENUMBER'
         ,'Le numéro de téléphone que vous avez renseigné est invalide. Veuillez respecter 0X.XX.XX.XX.XX');
 define('ADDCHARA_ERROR_SERVICENAME'
         ,'Wrong!');
+define('ADDCHARA_ERROR_PORTRAIT'
+        ,'Le nom du fichier ne doi comporter que des lettres minuscules sans accent, des tirets et doit se terminer en ".png".');
 define('ADDCHARA_ERROR_SEND'
         ,'Erreur durant l\'ajout du personnage.');
 define('ADDCHARA_SUCCESS_SEND'

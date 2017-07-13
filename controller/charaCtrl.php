@@ -1,5 +1,10 @@
 <?php
 $characters = new characters();
+//On vérifie que l'on passe bien un entier pour le supprimer
+if(isset($_GET['deleteId']) && is_numeric($_GET['deleteId']) ){
+    $characters->id = $_GET['deleteId'];
+    $characters->deleteChara();
+}
 //On vérifie si des données son passée en post
 if(isset($_POST['religions'])){
     //On passe à l'attribut religionId la valeur choisie sur la liste déroulante

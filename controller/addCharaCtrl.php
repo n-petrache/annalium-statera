@@ -27,9 +27,9 @@ if (isset($_GET['modifyId'])) {
 }
 
 $regexName = '/^[-a-z\p{L}\s-]+$/i';
-$regexAge = '/^([1-9])|([1-9][0-9])$/';
-$regexDate = '/^((1er|[2-9])|([1-2][0-9])|(3[0-1]))\ (Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre)$/';
-$regexFile = '/\.png$/';
+$regexAge = '/^(0|([1-9])|([1-9][0-9]))$/';
+$regexDate = '/^Inconnue$|^(((1er|[2-9])|([1-2][0-9])|(3[0-1]))\ (Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre))$/';
+$regexFile = '/^Néant$|^[a-z]+\.png$/';
 
 //déclaration d'un tableau d'erreur
 $errorList = array();
@@ -51,7 +51,7 @@ if (isset($_POST['register'])) {
     } else {
         $errorList['firstName'] = ADDCHARA_EMPTY_VALUE;
     }
-    if (!empty($_POST['age'])) {
+    if (!empty($_POST['age']) || $_POST['age'] == 0) {
         $characters->age = strip_tags($_POST['age']);
         if (!preg_match($regexAge, $characters->age)) {
             $errorList['age'] = ADDCHARA_ERROR_AGE;
@@ -61,7 +61,7 @@ if (isset($_POST['register'])) {
     }
     if (!empty($_POST['birthday'])) {
         $characters->birthday = strip_tags($_POST['birthday']);
-        if (!preg_match($regexDate, $characters->birthDate)) {
+        if (!preg_match($regexDate, $characters->birthday)) {
             $errorList['birthday'] = ADDCHARA_ERROR_BIRTHDAY;
         }
     } else {
@@ -101,9 +101,6 @@ if (isset($_POST['register'])) {
     }
     if (!empty($_POST['description'])) {
         $characters->description = strip_tags($_POST['description']);
-        if (!preg_match($regexPhone, $characters->description)) {
-            $errorList['description'] = ADDCHARA_ERROR_DESCRIPTION;
-        }
     } else {
         $errorList['description'] = ADDCHARA_EMPTY_VALUE;
     }
@@ -123,7 +120,7 @@ if (isset($_POST['register'])) {
         } else if (!is_numeric($_POST['id'])) {
             $message = ADDCHARA_ERROR;
         } else {
-            if ($characters->modifyUser()) {
+            if ($characters->modifyChara()) {
                 $message = ADDCHARA_SUCCESS_MODIFY;
             } else {
                 $message = ADDCHARA_ERROR_MODIFY;

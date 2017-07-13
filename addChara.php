@@ -25,7 +25,7 @@ include_once 'controller/addCharaCtrl.php';
    <body>
       <h2>Ajouter/modifier un personnage</h2>
       <a class="btn btn-primary" href="/">Retour</a>
-      <form name="addChara" method="POST" action="?page=characters" enctype="multipart/form-data" class="form-vertical">
+      <form name="addChara" method="POST" action="index.php?page=characters" enctype="multipart/form-data" class="form-vertical">
          <div class="col-xs-12 form-group <?= isset($errorList['lastName']) ? 'has-error' : '' ?>">
             <label class="control-label col-lg-offset-1 col-lg-2" for="lastName">Nom : *</label>
             <div class="col-lg-8">
@@ -51,7 +51,7 @@ include_once 'controller/addCharaCtrl.php';
             <label class="control-label col-lg-offset-1 col-lg-2" for="birthday">Date de naissance : *</label>
             <div class="col-lg-8">
                <input type="text" class="form-control" name="birthday" id="birthday" value="<?= $characters->birthday ?>" required>
-               <p class="help-block"><?= isset($errorList['birthday']) ? $errorList['birthDate'] : '' ?></p>
+               <p class="help-block"><?= isset($errorList['birthday']) ? $errorList['birthday'] : '' ?></p>
             </div>
          </div>
          <div class="col-xs-12 form-group <?= isset($errorList['astroSign']) ? 'has-error' : '' ?>">
@@ -109,7 +109,7 @@ include_once 'controller/addCharaCtrl.php';
          <div class="col-xs-12 form-group <?= isset($errorList['description']) ? 'has-error' : '' ?>">
             <label class="control-label col-lg-offset-1 col-lg-2" for="description">Description : *</label>
             <div class="col-lg-8">
-               <input type="text" class="form-control" name="description" id="description" value="<?= $characters->description ?>" required maxlength="500">
+               <textarea maxlength="500" type="text" class="form-control" name="description" id="description" required><?= $characters->description ?></textarea>
                <p class="help-block"><?= isset($errorList['description']) ? $errorList['description'] : '' ?></p>
             </div>
          </div>
