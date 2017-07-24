@@ -73,3 +73,10 @@ CREATE TABLE IF NOT EXISTS `annaliumStatera_categories` (
   ,PRIMARY KEY (`id`)
 )
 ENGINE=INNODB;
+
+CREATE TABLE `annaliumStatera_trivias` (
+  `id` INT AUTO_INCREMENT
+  ,`title` VARCHAR(50)
+  ,`description` TEXT
+  ,PRIMARY KEY (`id`)
+)

@@ -11,6 +11,23 @@ $(".back").click(function () {
     $(".chara").slideUp();
     $(".characters").slideDown();
 });
+
+//$(".modifTriviaBtn").click(function() {
+//    $(".modifTrivia").slideDown();
+//});
+
+//function showEdit(btn) {
+//    $(btn).next(".modifTrivia").toggle("slow");
+//}
+
+//$('.modifTrivia').on('click', '.modifTriviaBtn', function() {
+//    $(this).next('.modifTrivia').show();
+//});
+
+function showEdit(el) {
+    $(el).show("slow");
+}
+
 $(document).ready(function () {
     var sideslider = $('[data-toggle=collapse-side]');
     var sel = sideslider.attr('data-target');

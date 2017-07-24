@@ -67,7 +67,7 @@ header{
     padding-bottom: 30px;
     margin-top: 20px;
     background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 3px;
+    border-radius: 5px;
     height: auto;
 }
 h2{
@@ -79,6 +79,12 @@ div[id="intro"] p{
     padding-right: 20px;
     font-size: 20px;
     text-indent: 30px;
+}
+.modifTrivia {
+    display: none;
+}
+.modifTrivia textarea, .modifTrivia input{
+    color: #333;
 }
 /*#Noya{
     height: 25em;

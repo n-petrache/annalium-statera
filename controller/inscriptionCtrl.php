@@ -7,7 +7,7 @@ $userError = false;
 $users = new users();
 
 //On vérifie si l'on a bien appuyé sur le bouton Enregistrer
-if (isset($_POST['save'])) {
+if (isset($_POST['subscribe'])) {
     //Si la variable POST n'est pas vide
     if (!empty($_POST['pseudoI'])) {
         //On stocke sa valeur dans l'attribut login de l'objet user en sécurisant (strip_tags)

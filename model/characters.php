@@ -58,13 +58,9 @@ class characters extends database {
         if ($this->religionId == 0) {
             $queryResult = $this->pdo->query($query);
         } else {
-            $query .= ' WHERE `astroSignId` = :astroSignId '
-                    . 'OR `religionId` = :religionId '
-                    . 'OR `casteId` = :casteId';
+            $query .= ' WHERE `religionId` = :religionId';
             $queryResult = $this->pdo->prepare($query);
-            $queryResult->bindValue(':astroSignId', $this->astroSignId, PDO::PARAM_INT);
             $queryResult->bindValue(':religionId', $this->religionId, PDO::PARAM_INT);
-            $queryResult->bindValue(':casteId', $this->casteId, PDO::PARAM_INT);
             $queryResult->execute();
         }
         return $queryResult->fetchAll(PDO::FETCH_OBJ);
@@ -82,7 +78,7 @@ class characters extends database {
     }
 
     /**
-     * Methode permettant d'ajouter un nouvel personnage
+     * Methode permettant d'ajouter un nouveau personnage
      * @return boolean
      */
     public function addChara() {

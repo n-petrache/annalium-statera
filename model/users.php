@@ -87,7 +87,7 @@ class users extends database {
         if ($queryPrepare->execute()) {
             //On récupère le hash
             $result = $queryPrepare->fetch(PDO::FETCH_OBJ);
-            //Si resulte est un objet (donc si on a récupéré et stocké notre résultat dans result)
+            //Si result est un objet (donc si on a récupéré et stocké notre résultat dans result)
             if (is_object($result)) {
                 //On donne à l'attribut de notre objet créé dans le controller la valeur de l'attribut password de notre objet resultat
                 $this->password = $result->password;
@@ -96,7 +96,7 @@ class users extends database {
             }
         }
         //Si $isOk est à false, aucune condition n'est remplie, il y a une erreur, on pourra afficher un message
-        //Si elle est à true, toutes les conditions sont remplies est on pourra éxécuter la suite
+        //Si elle est à true, toutes les conditions sont remplies est on pourra executer la suite
         return $isOk;
     }
 

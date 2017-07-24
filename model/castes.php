@@ -1,6 +1,6 @@
 <?php
 /**
- * Modèle de la table religions
+ * Modèle de la table castes
  */
 class castes extends database{
     public $id = 0;

@@ -19,9 +19,9 @@ $castesList = $castes->getCastesList();
 $characters = new characters();
 
 //Si on appuie sur le bouton modifier dans la page index
-if (isset($_GET['modifyId'])) {
+if (isset($_GET['modifyCharaId'])) {
     //on passe à l'attribut la valeur de l'id du personnage à modifier
-    $characters->id = $_GET['modifyId'];
+    $characters->id = $_GET['modifyCharaId'];
     //on récupère les infos du personnage
     $characters->getCharaById();
 }
@@ -34,7 +34,7 @@ $regexFile = '/^Néant$|^[a-z]+\.png$/';
 //déclaration d'un tableau d'erreur
 $errorList = array();
 $message = '';
-if (isset($_POST['register'])) {
+if (isset($_POST['addChara'])) {
     if (!empty($_POST['lastName'])) {
         $characters->lastName = strip_tags($_POST['lastName']);
         if (!preg_match($regexName, $characters->lastName)) {
@@ -70,7 +70,7 @@ if (isset($_POST['register'])) {
     if (!empty($_POST['astroSign'])) {
         $characters->astroSignId = strip_tags($_POST['astroSign']);
         if (!is_numeric($characters->astroSignId)) {
-            $errorList['astroSign'] = ADDCHARA_ERROR_ASTRO;
+            $errorList['astroSign'] = ADDCHARA_ERROR_SELECT;
         }
     } else {
         $errorList['astroSign'] = ADDCHARA_EMPTY_VALUE;
@@ -78,7 +78,7 @@ if (isset($_POST['register'])) {
     if (!empty($_POST['religion'])) {
         $characters->religionId = strip_tags($_POST['religion']);
         if (!is_numeric($characters->religionId)) {
-            $errorList['religion'] = ADDCHARA_ERROR_RELIGION;
+            $errorList['religion'] = ADDCHARA_ERROR_SELECT;
         }
     } else {
         $errorList['religion'] = ADDCHARA_EMPTY_VALUE;
@@ -86,7 +86,7 @@ if (isset($_POST['register'])) {
     if (!empty($_POST['caste'])) {
         $characters->casteId = strip_tags($_POST['caste']);
         if (!is_numeric($characters->casteId)) {
-            $errorList['caste'] = ADDCHARA_ERROR_CASTE;
+            $errorList['caste'] = ADDCHARA_ERROR_SELECT;
         }
     } else {
         $errorList['caste'] = ADDCHARA_EMPTY_VALUE;
@@ -109,7 +109,7 @@ if (isset($_POST['register'])) {
     }
 //On compte le nombre de lignes pour savoir si il y a eu une erreur dans la saisie
     if (count($errorList) == 0) {
-//Dans le cas où on enregistre un nouveau personnage l'id sera = à 0
+//Dans le cas où on enregistre un nouveau personnage, l'id sera égal à 0
         if ($_POST['id'] == 0) {
 //Si PDO renvoie une erreur on le signale à l'utilisateur
             if (!$characters->addChara()) {

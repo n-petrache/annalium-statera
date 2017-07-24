@@ -25,7 +25,7 @@ include_once 'controller/addCharaCtrl.php';
    <body>
       <h2>Ajouter/modifier un personnage</h2>
       <a class="btn btn-primary" href="/">Retour</a>
-      <form name="addChara" method="POST" action="index.php?page=characters" enctype="multipart/form-data" class="form-vertical">
+      <form name="addChara" method="POST" action="index.php?page=characters" class="form-vertical"> <!--enctype="multipart/form-data"-->
          <div class="col-xs-12 form-group <?= isset($errorList['lastName']) ? 'has-error' : '' ?>">
             <label class="control-label col-lg-offset-1 col-lg-2" for="lastName">Nom : *</label>
             <div class="col-lg-8">
@@ -115,7 +115,7 @@ include_once 'controller/addCharaCtrl.php';
          </div>
          <input type="hidden" name="id" value="<?= $characters->id ?>" />
          <div class="col-xs-12 form-group">
-            <input type="submit" name="register" value="Soumettre" class="form-control"/>
+            <input type="submit" name="addChara" value="Soumettre" class="form-control"/>
          </div>
       </form>
    </body>

@@ -1,8 +1,8 @@
 <?php
 $characters = new characters();
 //On vérifie que l'on passe bien un entier pour le supprimer
-if(isset($_GET['deleteId']) && is_numeric($_GET['deleteId']) ){
-    $characters->id = $_GET['deleteId'];
+if(isset($_GET['deleteCharaId']) && is_numeric($_GET['deleteCharaId']) ){
+    $characters->id = $_GET['deleteCharaId'];
     $characters->deleteChara();
 }
 //On vérifie si des données son passée en post

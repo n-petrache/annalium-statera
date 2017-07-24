@@ -8,11 +8,23 @@ include_once 'model/characters.php';
 include_once 'model/astroSigns.php';
 include_once 'model/religions.php';
 include_once 'model/castes.php';
+include_once 'model/trivias.php';
 include_once 'lang/FR_FR.php';
 include_once 'controller/inscriptionCtrl.php';
 include_once 'controller/connectionCtrl.php';
 include_once 'controller/charaCtrl.php';
 include_once 'controller/addCharaCtrl.php';
+include_once 'controller/triviasCtrl.php';
+if (isset($_GET['logout'])) {
+////Fermeture de la session sans détruire les données
+//    session_write_close();
+// Détruit les données de la session
+    session_unset();
+// Détruit les variables de session
+    session_destroy();
+//// On redirige le visiteur vers la page d'accueil
+//    header('location: index.php');
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,6 +37,16 @@ include_once 'controller/addCharaCtrl.php';
       <title>Annalium Statera</title>
    </head>
    <body>
+      <div id="fb-root"></div>
+      <script>(function (d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id))
+                  return;
+              js = d.createElement(s);
+              js.id = id;
+              js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9";
+              fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));</script>
       <header>
          <h1 id="main-title" style="font-size: 75px;">Annalium Statera</h1>
       </header>
@@ -44,7 +66,7 @@ include_once 'controller/addCharaCtrl.php';
                      <li><a href="#">Récits</a></li>
                      <li><a href="?page=characters">Personnages</a></li>
                      <li><a href="#">Galerie</a></li>
-                     <li><a href="#">Références</a></li>
+                     <li><a href="?page=trivias">Trivias</a></li>
                   </ul>
                </nav>
             </div>
@@ -54,7 +76,6 @@ include_once 'controller/addCharaCtrl.php';
          <div class="main">
             <div id="top-bar">
                <!-- Trigger the modal with a button -->
-               <div class="btn-group">
                    <?php
                    //Affichage du bouton de connexion si celle-ci n'est pas encore effectuée
                    if (!isset($_SESSION['pseudoC'])) {
@@ -65,14 +86,11 @@ include_once 'controller/addCharaCtrl.php';
                   //Affichage des boutons de déconnexion et d'inscription d'un nouveau membre si la connexion est réussie
                   if (isset($_SESSION['pseudoC'])) {
                       ?>
-                      <form method="POST" action="#">
-                         <button type="submit" class="btn btn-primary" name="disconnection">Déconnexion</button>
-                      </form>
+                      <a class="btn btn-primary" href="?logout" name="disconnection">Déconnexion</a>
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscription">Inscrire un nouveau membre</button>
                       <?php
                   }
                   ?>
-               </div>
                <?php
                //Affichage du message de bienvenue si la connexion est réussie
                if (isset($_SESSION['pseudoC'])) {
@@ -94,7 +112,7 @@ include_once 'controller/addCharaCtrl.php';
                         </div>
                         <div class="modal-body">
                            <div class="row">
-                              <form method="POST" action="index.php">
+                              <form method="POST" action="#?login">
                                  <div class="row">
                                     <div class="col-sm-offset-1 col-sm-3 text-center">
                                        <label for="pseudoC">Pseudo :</label>
@@ -133,7 +151,7 @@ include_once 'controller/addCharaCtrl.php';
                         </div>
                         <div class="modal-body">
                            <div class="row">
-                              <form method="POST" action="index.php">
+                              <form method="POST" action="#">
                                  <div class="row">
                                     <div class="col-xs-offset-1 col-sm-3">
                                        <label for="pseudoI">Pseudo :</label>
@@ -162,7 +180,7 @@ include_once 'controller/addCharaCtrl.php';
                         </div>
                         <div class="modal-footer">
                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                           <button type="submit" class="btn btn-primary" name="save">Ok</button>
+                           <button type="submit" class="btn btn-primary" name="subscribe">Ok</button>
                            </form>
                         </div>
                      </div>
@@ -171,47 +189,39 @@ include_once 'controller/addCharaCtrl.php';
                </div>
             </div>
             <div id="main-window" class="col-md-offset-1 col-md-10">
-               <?php
-               $page = isset($_GET['page']) ? $_GET['page'] : "accueil";
-               $nom_page = $page . ".php";
-               $rep = "./";
-               $dir = opendir($rep);
-               $page_exist = 0;
-               while (FALSE !== ($file = readdir($dir))) {
-                   if ($file == $nom_page) {
-                       $page_exist = 1;
-                   }
-               }
-               if ($page_exist == 1) {
-                   include_once($nom_page);
-               } else {
-                   include_once("accueil.php");
-               }
-               ?>
+                <?php
+                $page = isset($_GET['page']) ? $_GET['page'] : "accueil";
+                $nom_page = $page . ".php";
+                $rep = "./";
+                $dir = opendir($rep);
+                $page_exist = 0;
+                while (FALSE !== ($file = readdir($dir))) {
+                    if ($file == $nom_page) {
+                        $page_exist = 1;
+                    }
+                }
+                if ($page_exist == 1) {
+                    include_once($nom_page);
+                } else {
+                    include_once("accueil.php");
+                }
+                ?>
             </div>
             <!--<img id="Noya" src="assets/img/wind.png" alt="Noya-Maï"/>-->
          </div>
       </div>
       <footer>
-         <!--<a href="http://www.facebook.com/pages/Les-travaux-de-Noya-Mai/105929299457053" target="_blank" title="Les travaux de Noya-Maï" id="lien">
-            <div id="btn-lien">Les travaux<br>de<br>Noya-Maï</div>
-         </a>-->
+         <!--<div class="fb-share-button" data-href="index.php" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftp%2Findex.php%2F&amp;src=sdkpreparse">Partager</a></div>
+         <a href="http://www.facebook.com/pages/Les-travaux-de-Noya-Mai/105929299457053" target="_blank" title="Les travaux de Noya-Maï" id="lien">
+                     <div id="btn-lien">Les travaux<br>de<br>Noya-Maï</div>
+                  </a>-->
          <span>&copy; Noya-Maï</span>
       </footer>
       <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
       <script src="assets/js/script.js" type="text/javascript"></script>
+      <!--<script src=’http://static.ak.fbcdn.net/connect.php/js/FB.Share’ type=’text/javascript’/>-->
    </body>
 </html>
 <?php
-if (isset($_POST['disconnection'])) {
-////Fermeture de la session sans détruire les données
-//    session_write_close();
-// Détruit les données de la session
-    session_unset();
-// Détruit les variables de session
-    session_destroy();
-//// On redirige le visiteur vers la page d'accueil
-//    header('location: index.php');
-}
 ?>

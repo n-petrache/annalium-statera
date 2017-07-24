@@ -85,11 +85,11 @@ if (isset($_SESSION['pseudoC'])) {
               }
               ?></p>
           <?php
-          //Affichage du bouton de modification d'un personnage si la connexion est faite
+          //Affichage des boutons de modification et de suppression d'un personnage si la connexion est faite
           if (isset($_SESSION['pseudoC'])) {
               ?>
-              <a class="btn btn-warning" href="addChara.php?modifyId=<?= $chara->id ?>">Modifier le personnage</a>
-              <a class="btn btn-danger" href="?deleteId=<?= $chara->id ?>">Supprimer le personnage</a> 
+              <a class="btn btn-warning" href="addChara.php?modifyCharaId=<?= $chara->id ?>">Modifier le personnage</a>
+              <a class="btn btn-danger" href="?deleteCharaId=<?= $chara->id ?>">Supprimer le personnage</a> 
               <?php
           }
           ?>
