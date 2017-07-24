@@ -38,15 +38,17 @@ if (isset($_GET['logout'])) {
    </head>
    <body>
       <div id="fb-root"></div>
-      <script>(function (d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id))
-                  return;
-              js = d.createElement(s);
-              js.id = id;
-              js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9";
-              fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));</script>
+      <script>
+//          (function (d, s, id) {
+//              var js, fjs = d.getElementsByTagName(s)[0];
+//              if (d.getElementById(id))
+//                  return;
+//              js = d.createElement(s);
+//              js.id = id;
+//              js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9";
+//              fjs.parentNode.insertBefore(js, fjs);
+//          }(document, 'script', 'facebook-jssdk'));
+      </script>
       <header>
          <h1 id="main-title" style="font-size: 75px;">Annalium Statera</h1>
       </header>
@@ -76,21 +78,21 @@ if (isset($_GET['logout'])) {
          <div class="main">
             <div id="top-bar">
                <!-- Trigger the modal with a button -->
+               <?php
+               //Affichage du bouton de connexion si celle-ci n'est pas encore effectuée
+               if (!isset($_SESSION['pseudoC'])) {
+                   ?>
+                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#connection">Connexion</button>
                    <?php
-                   //Affichage du bouton de connexion si celle-ci n'est pas encore effectuée
-                   if (!isset($_SESSION['pseudoC'])) {
-                       ?>
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#connection">Connexion</button>
-                      <?php
-                  }
-                  //Affichage des boutons de déconnexion et d'inscription d'un nouveau membre si la connexion est réussie
-                  if (isset($_SESSION['pseudoC'])) {
-                      ?>
-                      <a class="btn btn-primary" href="?logout" name="disconnection">Déconnexion</a>
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscription">Inscrire un nouveau membre</button>
-                      <?php
-                  }
-                  ?>
+               }
+               //Affichage des boutons de déconnexion et d'inscription d'un nouveau membre si la connexion est réussie
+               if (isset($_SESSION['pseudoC'])) {
+                   ?>
+                   <a class="btn btn-primary" href="?logout" name="disconnection">Déconnexion</a>
+                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscription">Inscrire un nouveau membre</button>
+                   <?php
+               }
+               ?>
                <?php
                //Affichage du message de bienvenue si la connexion est réussie
                if (isset($_SESSION['pseudoC'])) {
@@ -189,23 +191,23 @@ if (isset($_GET['logout'])) {
                </div>
             </div>
             <div id="main-window" class="col-md-offset-1 col-md-10">
-                <?php
-                $page = isset($_GET['page']) ? $_GET['page'] : "accueil";
-                $nom_page = $page . ".php";
-                $rep = "./";
-                $dir = opendir($rep);
-                $page_exist = 0;
-                while (FALSE !== ($file = readdir($dir))) {
-                    if ($file == $nom_page) {
-                        $page_exist = 1;
-                    }
-                }
-                if ($page_exist == 1) {
-                    include_once($nom_page);
-                } else {
-                    include_once("accueil.php");
-                }
-                ?>
+               <?php
+               $page = isset($_GET['page']) ? $_GET['page'] : "accueil";
+               $nom_page = $page . ".php";
+               $rep = "./";
+               $dir = opendir($rep);
+               $page_exist = 0;
+               while (FALSE !== ($file = readdir($dir))) {
+                   if ($file == $nom_page) {
+                       $page_exist = 1;
+                   }
+               }
+               if ($page_exist == 1) {
+                   include_once($nom_page);
+               } else {
+                   include_once("accueil.php");
+               }
+               ?>
             </div>
             <!--<img id="Noya" src="assets/img/wind.png" alt="Noya-Maï"/>-->
          </div>
