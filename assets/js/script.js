@@ -25,7 +25,10 @@ $(".back").click(function () {
 //});
 
 function showEdit(el) {
-    $(el).show("slow");
+    $(el).show();
+}
+function hideEdit(el) {
+    $(el).hide();
 }
 
 $(document).ready(function () {

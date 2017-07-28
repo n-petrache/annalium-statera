@@ -1,13 +1,13 @@
 <h2>Les personnages</h2>
 <div class="col-xs-12">
-   <form action="?page=characters" method="POST" class="rel-select">
+   <form action="index.php?page=characters" method="POST" class="rel-select">
       <select name="religions" onchange="form.submit()">
          <option value="0">Tous les personnages</option>
          <?php
-         foreach ($religionsList as $religion) {
+         foreach ($religionsList as $rel) {
              //Dans l'option on vérifie grâce à un ternaire que la valeur passée en POST($characters->religionId) est égale à l'option.
              ?>     
-             <option value="<?= $religion->id ?>" <?= $religion->id == $characters->religionId ? 'selected' : '' ?>><?= $religion->name ?></option>
+             <option value="<?= $rel->id ?>" <?= $rel->id == $characters->religionId ? 'selected' : '' ?>><?= $rel->name ?></option>
              <?php
          }
          ?>
@@ -85,8 +85,9 @@ if (isset($_SESSION['pseudoC'])) {
               }
               ?></p>
           <?php
-          //Affichage des boutons de modification et de suppression d'un personnage si la connexion est faite
-          if (isset($_SESSION['pseudoC'])) {
+          //Affichage des boutons de modification et de suppression d'un personnage si la connexion est faite 
+          //et qu'il s'agit du compte administrateur
+          if (isset($_SESSION['pseudoC']) && $users->groupId == 'Administrateur') {
               ?>
               <a class="btn btn-warning" href="addChara.php?modifyCharaId=<?= $chara->id ?>">Modifier le personnage</a>
               <a class="btn btn-danger" href="?deleteCharaId=<?= $chara->id ?>">Supprimer le personnage</a> 

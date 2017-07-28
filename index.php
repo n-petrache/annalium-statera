@@ -8,6 +8,8 @@ include_once 'model/characters.php';
 include_once 'model/astroSigns.php';
 include_once 'model/religions.php';
 include_once 'model/castes.php';
+include_once 'model/pictures.php';
+include_once 'model/categories.php';
 include_once 'model/trivias.php';
 include_once 'lang/FR_FR.php';
 include_once 'controller/inscriptionCtrl.php';
@@ -15,6 +17,7 @@ include_once 'controller/connectionCtrl.php';
 include_once 'controller/charaCtrl.php';
 include_once 'controller/addCharaCtrl.php';
 include_once 'controller/triviasCtrl.php';
+include_once 'controller/galleryCtrl.php';
 if (isset($_GET['logout'])) {
 ////Fermeture de la session sans détruire les données
 //    session_write_close();
@@ -64,10 +67,10 @@ if (isset($_GET['logout'])) {
             <div class="navbar-inverse side-collapse in">
                <nav role="navigation" class="navbar-collapse">
                   <ul class="nav navbar-nav">
-                     <li><a href="?page=accueil" class="glyphicon glyphicon-home"></a></li>
+                     <li><a href="?page=main" class="glyphicon glyphicon-home"></a></li>
                      <li><a href="#">Récits</a></li>
                      <li><a href="?page=characters">Personnages</a></li>
-                     <li><a href="#">Galerie</a></li>
+                     <li><a href="?page=gallery">Galerie</a></li>
                      <li><a href="?page=trivias">Trivias</a></li>
                   </ul>
                </nav>
@@ -85,15 +88,18 @@ if (isset($_GET['logout'])) {
                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#connection">Connexion</button>
                    <?php
                }
-               //Affichage des boutons de déconnexion et d'inscription d'un nouveau membre si la connexion est réussie
                if (isset($_SESSION['pseudoC'])) {
                    ?>
                    <a class="btn btn-primary" href="?logout" name="disconnection">Déconnexion</a>
+                   <?php
+               }
+               //Affichage du bouton d'inscription d'un nouveau membre si la connexion est réussie 
+               //et qu'il s'agit du compte administrateur
+               if (isset($_SESSION['pseudoC']) && $users->groupId == 'Administrateur') {
+                   ?>
                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscription">Inscrire un nouveau membre</button>
                    <?php
                }
-               ?>
-               <?php
                //Affichage du message de bienvenue si la connexion est réussie
                if (isset($_SESSION['pseudoC'])) {
                    ?>
@@ -192,7 +198,7 @@ if (isset($_GET['logout'])) {
             </div>
             <div id="main-window" class="col-md-offset-1 col-md-10">
                <?php
-               $page = isset($_GET['page']) ? $_GET['page'] : "accueil";
+               $page = isset($_GET['page']) ? $_GET['page'] : "main";
                $nom_page = $page . ".php";
                $rep = "./";
                $dir = opendir($rep);
@@ -205,7 +211,7 @@ if (isset($_GET['logout'])) {
                if ($page_exist == 1) {
                    include_once($nom_page);
                } else {
-                   include_once("accueil.php");
+                   include_once("main.php");
                }
                ?>
             </div>

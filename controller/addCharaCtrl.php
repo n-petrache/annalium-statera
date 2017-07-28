@@ -18,7 +18,7 @@ $castesList = $castes->getCastesList();
 //Instanciation de la classe user
 $characters = new characters();
 
-//Si on appuie sur le bouton modifier dans la page index
+//Si on appuie sur le bouton modifier dans la page characters
 if (isset($_GET['modifyCharaId'])) {
     //on passe à l'attribut la valeur de l'id du personnage à modifier
     $characters->id = $_GET['modifyCharaId'];
@@ -41,7 +41,7 @@ if (isset($_POST['addChara'])) {
             $errorList['lastName'] = ADDCHARA_ERROR_LASTNAME;
         }
     } else {
-        $errorList['lastName'] = ADDCHARA_EMPTY_VALUE;
+        $errorList['lastName'] = EMPTY_VALUE;
     }
     if (!empty($_POST['firstName'])) {
         $characters->firstName = strip_tags($_POST['firstName']);
@@ -49,7 +49,7 @@ if (isset($_POST['addChara'])) {
             $errorList['firstName'] = ADDCHARA_ERROR_FIRSTNAME;
         }
     } else {
-        $errorList['firstName'] = ADDCHARA_EMPTY_VALUE;
+        $errorList['firstName'] = EMPTY_VALUE;
     }
     if (!empty($_POST['age']) || $_POST['age'] == 0) {
         $characters->age = strip_tags($_POST['age']);
@@ -57,7 +57,7 @@ if (isset($_POST['addChara'])) {
             $errorList['age'] = ADDCHARA_ERROR_AGE;
         }
     } else {
-        $errorList['age'] = ADDCHARA_EMPTY_VALUE;
+        $errorList['age'] = EMPTY_VALUE;
     }
     if (!empty($_POST['birthday'])) {
         $characters->birthday = strip_tags($_POST['birthday']);
@@ -65,7 +65,7 @@ if (isset($_POST['addChara'])) {
             $errorList['birthday'] = ADDCHARA_ERROR_BIRTHDAY;
         }
     } else {
-        $errorList['birthday'] = ADDCHARA_EMPTY_VALUE;
+        $errorList['birthday'] = EMPTY_VALUE;
     }
     if (!empty($_POST['astroSign'])) {
         $characters->astroSignId = strip_tags($_POST['astroSign']);
@@ -73,7 +73,7 @@ if (isset($_POST['addChara'])) {
             $errorList['astroSign'] = ADDCHARA_ERROR_SELECT;
         }
     } else {
-        $errorList['astroSign'] = ADDCHARA_EMPTY_VALUE;
+        $errorList['astroSign'] = EMPTY_VALUE;
     }
     if (!empty($_POST['religion'])) {
         $characters->religionId = strip_tags($_POST['religion']);
@@ -81,7 +81,7 @@ if (isset($_POST['addChara'])) {
             $errorList['religion'] = ADDCHARA_ERROR_SELECT;
         }
     } else {
-        $errorList['religion'] = ADDCHARA_EMPTY_VALUE;
+        $errorList['religion'] = EMPTY_VALUE;
     }
     if (!empty($_POST['caste'])) {
         $characters->casteId = strip_tags($_POST['caste']);
@@ -89,7 +89,7 @@ if (isset($_POST['addChara'])) {
             $errorList['caste'] = ADDCHARA_ERROR_SELECT;
         }
     } else {
-        $errorList['caste'] = ADDCHARA_EMPTY_VALUE;
+        $errorList['caste'] = EMPTY_VALUE;
     }
     if (!empty($_POST['portraitFile'])) {
         $characters->portraitFile = strip_tags($_POST['portraitFile']);
@@ -97,12 +97,12 @@ if (isset($_POST['addChara'])) {
             $errorList['portraitFile'] = ADDCHARA_ERROR_PORTRAIT;
         }
     } else {
-        $errorList['portraitFile'] = ADDCHARA_EMPTY_VALUE;
+        $errorList['portraitFile'] = EMPTY_VALUE;
     }
     if (!empty($_POST['description'])) {
         $characters->description = strip_tags($_POST['description']);
     } else {
-        $errorList['description'] = ADDCHARA_EMPTY_VALUE;
+        $errorList['description'] = EMPTY_VALUE;
     }
     if (!empty($_POST['id'])) {
         $characters->id = strip_tags($_POST['id']);

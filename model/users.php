@@ -16,6 +16,7 @@ class users extends database {
     public $id = 0;
     public $login = '';
     public $password = '';
+    public $groupId = 0;
 
     /**
      * Déclaration de la méthode magique construct.
@@ -42,6 +43,48 @@ class users extends database {
         } else {
             return false;
         }
+    }
+    /**
+     * Méthode permettant de récupérer la liste des utilisateurs de la table users.
+     * @return Array
+     */
+    public function getUsersListByGroup() {
+        $query = 'SELECT `us`.`id`, `us`.`login`, `us`.`password`, `grp`.`name` AS `groupName` '
+                . 'FROM `annaliumStatera_users` AS `us` '
+                . 'INNER JOIN `annaliumStatera_usersGroups` AS `grp` ON `us`.`groupId` = `grp`.`id`';
+        if ($this->groupId == 0) {
+            $queryResult = $this->pdo->query($query);
+        } else {
+            $query .= ' WHERE `groupId` = :groupId';
+            $queryResult = $this->pdo->prepare($query);
+            $queryResult->bindValue(':groupId', $this->groupId, PDO::PARAM_INT);
+            $queryResult->execute();
+        }
+        return $queryResult->fetchAll(PDO::FETCH_OBJ);
+    }
+    /**
+     * Méthode permettant de récupérer la liste des utilisateurs de la table users.
+     * @return Array
+     */
+    public function getUsersListByService() {
+        $query = 'SELECT `us`.`id`, '
+                . 'CONCAT(`us`.`lastName`," ", `us`.`firstName`) AS `name`, '
+                . '`birthDate`, '
+                . 'CONCAT(`us`.`address`," ", `us`.`postalCode`) AS `address`, '
+                . '`us`.`phoneNumber`, '
+                . '`dep`.`name` AS `serviceName` '
+                . 'FROM `tppdo1_users` AS `us` '
+                . 'INNER JOIN `tppdo1_departments` AS `dep` '
+                . 'ON `us`.`id_tppdo1_departments` = `dep`.`id`';
+        if ($this->id_tppdo1_departments == 0) {
+            $queryResult = $this->pdo->query($query);
+        } else {
+            $query .= ' WHERE `id_tppdo1_departments` = :id_tppdo1_departments';
+            $queryResult = $this->pdo->prepare($query);
+            $queryResult->bindValue(':id_tppdo1_departments', $this->id_tppdo1_departments, PDO::PARAM_INT);
+            $queryResult->execute();
+        }
+        return $queryResult->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**

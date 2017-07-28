@@ -57,6 +57,14 @@ CREATE TABLE IF NOT EXISTS `annaliumStatera_castes` (
 ENGINE=INNODB;
 
 
+CREATE TABLE `annaliumStatera_writings` (
+  `id` INT AUTO_INCREMENT
+  ,`title` VARCHAR(50)
+  ,`fileName` VARCHAR(150)
+  ,PRIMARY KEY (`id`)
+)
+ENGINE=INNODB;
+
 CREATE TABLE IF NOT EXISTS `annaliumStatera_pictures` (
   `id` INT AUTO_INCREMENT
   ,`name` VARCHAR(50)
@@ -80,3 +88,4 @@ CREATE TABLE `annaliumStatera_trivias` (
   ,`description` TEXT
   ,PRIMARY KEY (`id`)
 )
+ENGINE=INNODB;

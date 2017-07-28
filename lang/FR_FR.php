@@ -19,7 +19,7 @@ define('INDEX_ADDUSER','Ajout d\'un utilisateur');
 define('INDEX_MODIFY','Modifier');
 //Texte d'erreur
 define('ADDCHARA_ERROR_LASTNAME'
-        ,'Le nom que vous avez renseigné est invalide.Veuillez n\'utiliser que des lettres, espaces et tirets.');
+        ,'Le nom que vous avez renseigné est invalide. Veuillez n\'utiliser que des lettres, espaces et tirets.');
 define('ADDCHARA_ERROR_FIRSTNAME'
         ,'Le prénom que vous avez renseigné est invalide. Veuillez n\'utiliser que des lettres, espaces et tirets.');
 define('ADDCHARA_ERROR_AGE'
@@ -30,7 +30,7 @@ define('ADDCHARA_ERROR_SELECT'
         ,'Wrong !');
 define('ADDCHARA_ERROR_PORTRAIT'
         ,'Le nom du fichier ne doit comporter que des lettres minuscules sans accent, des tirets et doit se terminer en ".png".');
-define('ADDCHARA_EMPTY_VALUE'
+define('EMPTY_VALUE'
         ,'Veuillez remplir le champ.');
 define('ADDCHARA_ERROR'
         ,'Erreur!!!');
@@ -39,6 +39,15 @@ define('ADDCHARA_ERROR_SEND'
 define('ADDCHARA_SUCCESS_SEND'
         ,'Le personnage a bien été ajouté.');
 define('ADDCHARA_SUCCESS_MODIFY'
-        ,'Le personnage a bien été modifié');
+        ,'Le personnage a bien été modifié.');
 define('ADDCHARA_ERROR_MODIFY'
-        ,'Erreur durant la modification');
+        ,'Erreur durant la modification.');
+
+define('TRIVIA_ERROR_SEND'
+        ,'Erreur durant l\'ajout de l\'anecdote.');
+define('TRIVIA_SUCCESS_SEND'
+        ,'L\'anecdote a bien été ajoutée.');
+define('TRIVIA_SUCCESS_MODIFY'
+        ,'L\'anecdote a bien été modifiée.');
+define('TRIVIA_ERROR_MODIFY'
+        ,'Erreur durant la modification.');

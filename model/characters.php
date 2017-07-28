@@ -34,16 +34,37 @@ class characters extends database {
     }
 
     /**
+     * Méthode qui permet de récupérer les informations d'un personnage
+     * @return boolean
+     */
+    public function getCharaById() {
+        $query = 'SELECT `lastName`, `firstName`, `age`, `birthday`, '
+                . '`astroSignId`, `religionId`, `casteId`, `portraitFile`, `description` '
+                . 'FROM `annaliumStatera_characters` WHERE `id` = :id';
+        $queryResult = $this->pdo->prepare($query);
+        $queryResult->bindValue(':id', $this->id, PDO::PARAM_INT);
+        if ($queryResult->execute()) {
+            $userResult = $queryResult->fetch(PDO::FETCH_OBJ);
+            $this->lastName = $userResult->lastName;
+            $this->firstName = $userResult->firstName;
+            $this->age = $userResult->age;
+            $this->birthday = $userResult->birthday;
+            $this->astroSignId = $userResult->astroSignId;
+            $this->religionId = $userResult->religionId;
+            $this->casteId = $userResult->casteId;
+            $this->portraitFile = $userResult->portraitFile;
+            $this->description = $userResult->description;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Méthode permettant de récupérer la liste des personnagess de la table characters.
      * @return Array
      */
     public function getCharaByReligion() {
-//        $q = 'SELECT `us`.`id`, '
-//                . 'CONCAT(`us`.`lastName`," ", `us`.`firstName`) AS `name`, '
-//                . '`birthDate`, CONCAT(`us`.`address`," ", `us`.`postalCode`) AS `address`, '
-//                . '`us`.`phoneNumber`, `dep`.`name` AS `serviceName` '
-//                . 'FROM `tppdo1_users` AS `us` '
-//                . 'INNER JOIN `tppdo1_departments` AS `dep` ON `us`.`id_tppdo1_departments` = `dep`.`id`';
         $query = 'SELECT `chara`.`id`, `chara`.`lastName`, `chara`.`firstName`, '
                 . '`chara`.`age`, `chara`.`birthday`, '
                 . '`chara`.`astroSignId`, `chara`.`religionId`, `chara`.`casteId`, '
@@ -52,9 +73,9 @@ class characters extends database {
                 . '`rel`.`name` AS `religion`, '
                 . '`cas`.`name` AS `caste` '
                 . 'FROM `annaliumStatera_characters` AS `chara` '
-                . 'LEFT JOIN `annaliumStatera_astroSigns` AS `ast` ON `ast`.`id`=`chara`.`astroSignId` '
-                . 'LEFT JOIN `annaliumStatera_religions` AS `rel` ON `rel`.`id`=`chara`.`religionId` '
-                . 'LEFT JOIN `annaliumStatera_castes` AS `cas` ON `cas`.`id`=`chara`.`casteId` ';
+                . 'INNER JOIN `annaliumStatera_astroSigns` AS `ast` ON `ast`.`id`=`chara`.`astroSignId` '
+                . 'INNER JOIN `annaliumStatera_religions` AS `rel` ON `rel`.`id`=`chara`.`religionId` '
+                . 'INNER JOIN `annaliumStatera_castes` AS `cas` ON `cas`.`id`=`chara`.`casteId` ';
         if ($this->religionId == 0) {
             $queryResult = $this->pdo->query($query);
         } else {
@@ -64,17 +85,6 @@ class characters extends database {
             $queryResult->execute();
         }
         return $queryResult->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    /**
-     * Methode permettant de supprimer un personnage
-     * @return boolean
-     */
-    public function deleteChara() {
-        $query = 'DELETE FROM `annaliumStatera_characters` WHERE `id` = :id';
-        $queryResult = $this->pdo->prepare($query);
-        $queryResult->bindValue(':id', $this->id, PDO::PARAM_INT);
-        return $queryResult->execute();
     }
 
     /**
@@ -98,32 +108,6 @@ class characters extends database {
     }
 
     /**
-     * Méthode qui permet de récupérer les informations d'un personnage
-     * @return boolean
-     */
-    public function getCharaById() {
-        $query = 'SELECT `lastName`, `firstName`, `age`, `birthday`, `astroSignId`, `religionId`, `casteId`, `portraitFile`, `description` '
-                . 'FROM `annaliumStatera_characters` WHERE `id` = :id';
-        $queryResult = $this->pdo->prepare($query);
-        $queryResult->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($queryResult->execute()) {
-            $userResult = $queryResult->fetch(PDO::FETCH_OBJ);
-            $this->lastName = $userResult->lastName;
-            $this->firstName = $userResult->firstName;
-            $this->age = $userResult->age;
-            $this->birthday = $userResult->birthday;
-            $this->astroSignId = $userResult->astroSignId;
-            $this->religionId = $userResult->religionId;
-            $this->casteId = $userResult->casteId;
-            $this->portraitFile = $userResult->portraitFile;
-            $this->description = $userResult->description;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Méthode permettant de modifier un personnage
      * @return type
      */
@@ -140,6 +124,17 @@ class characters extends database {
         $queryResult->bindValue(':casteId', $this->casteId, PDO::PARAM_INT);
         $queryResult->bindValue(':portraitFile', $this->portraitFile, PDO::PARAM_STR);
         $queryResult->bindValue(':description', $this->description, PDO::PARAM_STR);
+        $queryResult->bindValue(':id', $this->id, PDO::PARAM_INT);
+        return $queryResult->execute();
+    }
+
+    /**
+     * Methode permettant de supprimer un personnage
+     * @return boolean
+     */
+    public function deleteChara() {
+        $query = 'DELETE FROM `annaliumStatera_characters` WHERE `id` = :id';
+        $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':id', $this->id, PDO::PARAM_INT);
         return $queryResult->execute();
     }

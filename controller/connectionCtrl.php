@@ -16,4 +16,6 @@ if (isset($_POST['connection'])) {
     $connectionOk = password_verify($_POST['passwordC'], $users->password);
     $_SESSION['pseudoC'] = $users->login;
 }
-?>
+
+//appel de la méthode getUsersList qui me renvoi un tableau d'objet
+$usersByGroup = $users->getUsersListByGroup();
