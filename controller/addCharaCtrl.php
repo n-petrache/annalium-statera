@@ -29,7 +29,7 @@ if (isset($_GET['modifyCharaId'])) {
 $regexName = '/^[-a-z\p{L}\s-]+$/i';
 $regexAge = '/^(0|([1-9])|([1-9][0-9]))$/';
 $regexDate = '/^Inconnue$|^(((1er|[2-9])|([1-2][0-9])|(3[0-1]))\ (Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre))$/';
-$regexFile = '/^Néant$|^[a-z]+\.png$/';
+$regexFile = '/^Néant$|^[-a-z\p{L}\s-]+\.png$/';
 
 //déclaration d'un tableau d'erreur
 $errorList = array();

@@ -16,6 +16,14 @@ if (isset($_POST['connection'])) {
     $connectionOk = password_verify($_POST['passwordC'], $users->password);
     $_SESSION['pseudoC'] = $users->login;
 }
+if (isset($_GET['logout'])) {
+// Détruit les données de la session
+    session_unset();
+// Détruit les variables de session
+    session_destroy();
+// On redirige le visiteur vers la page d'accueil
+    header('location: ?');
+}
 
 //appel de la méthode getUsersList qui me renvoi un tableau d'objet
 $usersByGroup = $users->getUsersListByGroup();

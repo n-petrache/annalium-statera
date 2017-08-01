@@ -49,8 +49,7 @@ class users extends database {
      * @return Array
      */
     public function getUsersListByGroup() {
-        $query = 'SELECT `us`.`id`, `us`.`login`, `us`.`password`, `grp`.`name` AS `groupName` '
-                . 'FROM `annaliumStatera_users` AS `us` '
+        $query = 'SELECT `us`.`id`, `us`.`login`, `us`.`password`, `grp`.`name` AS `groupName` FROM `annaliumStatera_users` AS `us` '
                 . 'INNER JOIN `annaliumStatera_usersGroups` AS `grp` ON `us`.`groupId` = `grp`.`id`';
         if ($this->groupId == 0) {
             $queryResult = $this->pdo->query($query);
@@ -62,30 +61,26 @@ class users extends database {
         }
         return $queryResult->fetchAll(PDO::FETCH_OBJ);
     }
-    /**
-     * Méthode permettant de récupérer la liste des utilisateurs de la table users.
-     * @return Array
-     */
-    public function getUsersListByService() {
-        $query = 'SELECT `us`.`id`, '
-                . 'CONCAT(`us`.`lastName`," ", `us`.`firstName`) AS `name`, '
-                . '`birthDate`, '
-                . 'CONCAT(`us`.`address`," ", `us`.`postalCode`) AS `address`, '
-                . '`us`.`phoneNumber`, '
-                . '`dep`.`name` AS `serviceName` '
-                . 'FROM `tppdo1_users` AS `us` '
-                . 'INNER JOIN `tppdo1_departments` AS `dep` '
-                . 'ON `us`.`id_tppdo1_departments` = `dep`.`id`';
-        if ($this->id_tppdo1_departments == 0) {
-            $queryResult = $this->pdo->query($query);
-        } else {
-            $query .= ' WHERE `id_tppdo1_departments` = :id_tppdo1_departments';
-            $queryResult = $this->pdo->prepare($query);
-            $queryResult->bindValue(':id_tppdo1_departments', $this->id_tppdo1_departments, PDO::PARAM_INT);
-            $queryResult->execute();
-        }
-        return $queryResult->fetchAll(PDO::FETCH_OBJ);
-    }
+//    public function getUsersListByService() {
+//        $query = 'SELECT `us`.`id`, '
+//                . 'CONCAT(`us`.`lastName`," ", `us`.`firstName`) AS `name`, '
+//                . '`birthDate`, '
+//                . 'CONCAT(`us`.`address`," ", `us`.`postalCode`) AS `address`, '
+//                . '`us`.`phoneNumber`, '
+//                . '`dep`.`name` AS `serviceName` '
+//                . 'FROM `tppdo1_users` AS `us` '
+//                . 'INNER JOIN `tppdo1_departments` AS `dep` '
+//                . 'ON `us`.`id_tppdo1_departments` = `dep`.`id`';
+//        if ($this->id_tppdo1_departments == 0) {
+//            $queryResult = $this->pdo->query($query);
+//        } else {
+//            $query .= ' WHERE `id_tppdo1_departments` = :id_tppdo1_departments';
+//            $queryResult = $this->pdo->prepare($query);
+//            $queryResult->bindValue(':id_tppdo1_departments', $this->id_tppdo1_departments, PDO::PARAM_INT);
+//            $queryResult->execute();
+//        }
+//        return $queryResult->fetchAll(PDO::FETCH_OBJ);
+//    }
 
     /**
      * Methode permettant de supprimer un utilisateur
@@ -103,18 +98,20 @@ class users extends database {
      * @return boolean
      */
     public function addUser() {
-        $insert = 'INSERT INTO `annaliumStatera_users` (`login`,`password`) VALUES (:login,:password)';
+        $insert = 'INSERT INTO `annaliumStatera_users` (`id`,`login`,`password`,`groupId`) VALUES (NULL,:login,:password,:groupId)';
         $queryPrepare = $this->pdo->prepare($insert);
         $queryPrepare->bindValue(':login', $this->login, PDO::PARAM_STR);
         $queryPrepare->bindValue(':password', $this->password, PDO::PARAM_STR);
+        $queryPrepare->bindValue(':groupId', $this->groupId, PDO::PARAM_INT);
         return $queryPrepare->execute();
     }
 
     public function modifyUser() {
-        $query = 'UPDATE `annaliumStatera_users` SET `login` = :login, `password` = :password WHERE `id` = :id ';
+        $query = 'UPDATE `annaliumStatera_users` SET `login` = :login, `password` = :password, `groupId` = :groupId WHERE `id` = :id ';
         $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':login', $this->login, PDO::PARAM_STR);
         $queryResult->bindValue(':password', $this->password, PDO::PARAM_STR);
+        $queryResult->bindValue(':groupId', $this->groupId, PDO::PARAM_INT);
         return $queryResult->execute();
     }
 

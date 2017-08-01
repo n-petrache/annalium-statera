@@ -37,64 +37,40 @@ if (isset($_SESSION['pseudoC'])) {
                   echo ' ' . $chara->lastName;
               }
               ?></h3>
-          <img src="assets/img/portraits/<?= $chara->portraitFile == 'Néant' ? 'no-image.png' : $chara->portraitFile ?>" />
-          <p>Age : 
-              <?php
-              if ($chara->age != NULL && $chara->age != 0) {
-                  echo $chara->age . ' ans';
-              } else {
-                  echo 'Inconnu';
-              }
-              ?>
-          </p>
-          <p>Date de naissance : 
-              <?=
-              $chara->birthday;
-              if ($chara->birthday == NULL) {
-                  echo 'Inconnue';
-              }
-              ?>
-          </p>
-          <p>Signe astrologique : 
-              <?=
-              $chara->astroSign;
-              if ($chara->astroSign == NULL) {
-                  echo 'Inconnu';
-              }
-              ?>
-          </p>
-          <p>Religion : 
-              <?=
-              $chara->religion;
-              if ($chara->religion == NULL) {
-                  echo 'Inconnue';
-              }
-              ?>
-          </p>
-          <p>Caste : 
-              <?=
-              $chara->caste;
-              if ($chara->caste == NULL) {
-                  echo 'Inconnue';
-              }
-              ?>
-          </p>
-          <p><?php
-              if ($chara->description == NULL || $chara->description == 'Néant') {
-                  echo '';
-              }
-              ?></p>
-          <?php
-          //Affichage des boutons de modification et de suppression d'un personnage si la connexion est faite 
-          //et qu'il s'agit du compte administrateur
-          if (isset($_SESSION['pseudoC']) && $users->groupId == 'Administrateur') {
-              ?>
-              <a class="btn btn-warning" href="addChara.php?modifyCharaId=<?= $chara->id ?>">Modifier le personnage</a>
-              <a class="btn btn-danger" href="?deleteCharaId=<?= $chara->id ?>">Supprimer le personnage</a> 
-              <?php
-          }
-          ?>
-          <a class="back"><< Back</a>
+          <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
+             <img class="center-block" src="assets/img/portraits/<?= $chara->portraitFile == 'Néant' ? 'no-image.png' : $chara->portraitFile ?>" />
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+             <p>Age : 
+                 <?= $chara->age != NULL && $chara->age != 0 ? $chara->age . ' ans' : 'Inconnu' ?>
+             </p>
+             <p>Date de naissance : 
+                 <?= $chara->birthday != NULL ? $chara->birthday : 'Inconnue' ?>
+             </p>
+             <p>Signe astrologique : 
+                 <?= $chara->astroSign != NULL ? $chara->astroSign : 'Inconnu' ?>
+             </p>
+             <p>Religion : 
+                 <?= $chara->religion != NULL ? $chara->religion : 'Inconnue' ?>
+             </p>
+             <p>Caste : 
+                 <?= $chara->caste != NULL ? $chara->caste : 'Inconnue' ?>
+             </p>
+             <p>
+                 <?= $chara->description != NULL && $chara->description != 'Néant' ? $chara->description : '' ?>
+             </p>
+             <?php
+             //Affichage des boutons de modification et de suppression d'un personnage si la connexion est faite 
+             //et qu'il s'agit du compte administrateur
+             if (isset($_SESSION['pseudoC']) && $_SESSION['pseudoC'] == 'Noya-Mai') {
+                 ?>
+                 <a class="btn btn-warning" href="addChara.php?modifyCharaId=<?= $chara->id ?>">Modifier le personnage</a>
+                 <a class="btn btn-danger" href="?deleteCharaId=<?= $chara->id ?>">Supprimer le personnage</a> 
+                 <?php
+             }
+             ?>
+             <p><a class="back"><< Back</a></p>
+          </div>
        </div>
        <?php
    }

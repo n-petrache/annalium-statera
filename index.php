@@ -4,6 +4,7 @@ session_start();
 include_once 'config.php';
 include_once 'class/database.php';
 include_once 'model/users.php';
+include_once 'model/writings.php';
 include_once 'model/characters.php';
 include_once 'model/astroSigns.php';
 include_once 'model/religions.php';
@@ -14,20 +15,11 @@ include_once 'model/trivias.php';
 include_once 'lang/FR_FR.php';
 include_once 'controller/inscriptionCtrl.php';
 include_once 'controller/connectionCtrl.php';
+include_once 'controller/writingsCtrl.php';
 include_once 'controller/charaCtrl.php';
 include_once 'controller/addCharaCtrl.php';
 include_once 'controller/triviasCtrl.php';
 include_once 'controller/galleryCtrl.php';
-if (isset($_GET['logout'])) {
-////Fermeture de la session sans détruire les données
-//    session_write_close();
-// Détruit les données de la session
-    session_unset();
-// Détruit les variables de session
-    session_destroy();
-//// On redirige le visiteur vers la page d'accueil
-//    header('location: index.php');
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,8 +59,8 @@ if (isset($_GET['logout'])) {
             <div class="navbar-inverse side-collapse in">
                <nav role="navigation" class="navbar-collapse">
                   <ul class="nav navbar-nav">
-                     <li><a href="?page=main" class="glyphicon glyphicon-home"></a></li>
-                     <li><a href="#">Récits</a></li>
+                     <li><a href="?page=main" class="glyphicon glyphicon-home"> Accueil</a></li>
+                     <li><a href="?page=writings">Récits</a></li>
                      <li><a href="?page=characters">Personnages</a></li>
                      <li><a href="?page=gallery">Galerie</a></li>
                      <li><a href="?page=trivias">Trivias</a></li>
@@ -95,7 +87,7 @@ if (isset($_GET['logout'])) {
                }
                //Affichage du bouton d'inscription d'un nouveau membre si la connexion est réussie 
                //et qu'il s'agit du compte administrateur
-               if (isset($_SESSION['pseudoC']) && $users->groupId == 'Administrateur') {
+               if (isset($_SESSION['pseudoC']) && $_SESSION['pseudoC'] == 'Noya-Mai') {
                    ?>
                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscription">Inscrire un nouveau membre</button>
                    <?php
@@ -107,11 +99,9 @@ if (isset($_GET['logout'])) {
                    <?php
                }
                ?>
-
                <!-- Modal -->
                <div class="modal fade" id="connection" role="dialog">
                   <div class="modal-dialog">
-
                      <!-- Modal content-->
                      <div class="modal-content">
                         <div class="modal-header">
@@ -145,12 +135,10 @@ if (isset($_GET['logout'])) {
                            </form>
                         </div>
                      </div>
-
                   </div>
                </div>
                <div class="modal fade" id="inscription" role="dialog">
                   <div class="modal-dialog">
-
                      <!-- Modal content-->
                      <div class="modal-content">
                         <div class="modal-header">
@@ -184,6 +172,8 @@ if (isset($_GET['logout'])) {
                                        <input type="password" pattern=".{4,}" name="confirmPasswordI" id="confirmPasswordI" class="col-xs-10 col-sm-12">
                                     </div>
                                  </div>
+                                 <input type="hidden" name="groupId" id="groupId" value="2" />
+                                 <input type="hidden" name="id" id="groupId" value="<?= $users->id ?>" />
                            </div>
                         </div>
                         <div class="modal-footer">
@@ -192,7 +182,6 @@ if (isset($_GET['logout'])) {
                            </form>
                         </div>
                      </div>
-
                   </div>
                </div>
             </div>
