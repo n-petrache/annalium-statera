@@ -14,6 +14,7 @@ include_once 'controller/triviasCtrl.php';
 <html>
    <head>
       <meta charset="UTF-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
       <title>Ajouter/modifier une anecdote | Annalium Statera</title>
    </head>
    <body>

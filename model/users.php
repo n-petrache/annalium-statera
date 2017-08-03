@@ -49,8 +49,10 @@ class users extends database {
      * @return Array
      */
     public function getUsersListByGroup() {
-        $query = 'SELECT `us`.`id`, `us`.`login`, `us`.`password`, `grp`.`name` AS `groupName` FROM `annaliumStatera_users` AS `us` '
-                . 'INNER JOIN `annaliumStatera_usersGroups` AS `grp` ON `us`.`groupId` = `grp`.`id`';
+        $query = 'SELECT `us`.`id`, `us`.`login`, `us`.`password`, `grp`.`name` AS `groupName` '
+                . 'FROM `annaliumStatera_users` AS `us` '
+                . 'INNER JOIN `annaliumStatera_usersGroups` AS `grp` '
+                . 'ON `us`.`groupId` = `grp`.`id`';
         if ($this->groupId == 0) {
             $queryResult = $this->pdo->query($query);
         } else {
@@ -61,26 +63,6 @@ class users extends database {
         }
         return $queryResult->fetchAll(PDO::FETCH_OBJ);
     }
-//    public function getUsersListByService() {
-//        $query = 'SELECT `us`.`id`, '
-//                . 'CONCAT(`us`.`lastName`," ", `us`.`firstName`) AS `name`, '
-//                . '`birthDate`, '
-//                . 'CONCAT(`us`.`address`," ", `us`.`postalCode`) AS `address`, '
-//                . '`us`.`phoneNumber`, '
-//                . '`dep`.`name` AS `serviceName` '
-//                . 'FROM `tppdo1_users` AS `us` '
-//                . 'INNER JOIN `tppdo1_departments` AS `dep` '
-//                . 'ON `us`.`id_tppdo1_departments` = `dep`.`id`';
-//        if ($this->id_tppdo1_departments == 0) {
-//            $queryResult = $this->pdo->query($query);
-//        } else {
-//            $query .= ' WHERE `id_tppdo1_departments` = :id_tppdo1_departments';
-//            $queryResult = $this->pdo->prepare($query);
-//            $queryResult->bindValue(':id_tppdo1_departments', $this->id_tppdo1_departments, PDO::PARAM_INT);
-//            $queryResult->execute();
-//        }
-//        return $queryResult->fetchAll(PDO::FETCH_OBJ);
-//    }
 
     /**
      * Methode permettant de supprimer un utilisateur
@@ -98,7 +80,8 @@ class users extends database {
      * @return boolean
      */
     public function addUser() {
-        $insert = 'INSERT INTO `annaliumStatera_users` (`id`,`login`,`password`,`groupId`) VALUES (NULL,:login,:password,:groupId)';
+        $insert = 'INSERT INTO `annaliumStatera_users` (`id`,`login`,`password`,`groupId`) '
+                . 'VALUES (NULL,:login,:password,:groupId)';
         $queryPrepare = $this->pdo->prepare($insert);
         $queryPrepare->bindValue(':login', $this->login, PDO::PARAM_STR);
         $queryPrepare->bindValue(':password', $this->password, PDO::PARAM_STR);
@@ -107,7 +90,9 @@ class users extends database {
     }
 
     public function modifyUser() {
-        $query = 'UPDATE `annaliumStatera_users` SET `login` = :login, `password` = :password, `groupId` = :groupId WHERE `id` = :id ';
+        $query = 'UPDATE `annaliumStatera_users` '
+                . 'SET `login` = :login, `password` = :password, `groupId` = :groupId '
+                . 'WHERE `id` = :id ';
         $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':login', $this->login, PDO::PARAM_STR);
         $queryResult->bindValue(':password', $this->password, PDO::PARAM_STR);
@@ -120,7 +105,8 @@ class users extends database {
      */
     public function getHashByUser() {
         $isOk = false;
-        $select = 'SELECT `password` FROM `annaliumStatera_users` WHERE `login` = :login';
+        $select = 'SELECT `password` FROM `annaliumStatera_users` '
+                . 'WHERE `login` = :login';
         $queryPrepare = $this->pdo->prepare($select);
         $queryPrepare->bindValue(':login', $this->login, PDO::PARAM_STR);
         //Si la requête s'éxecute sans erreur
@@ -129,13 +115,15 @@ class users extends database {
             $result = $queryPrepare->fetch(PDO::FETCH_OBJ);
             //Si result est un objet (donc si on a récupéré et stocké notre résultat dans result)
             if (is_object($result)) {
-                //On donne à l'attribut de notre objet créé dans le controller la valeur de l'attribut password de notre objet resultat
+                //On donne à l'attribut de notre objet créé dans le controller 
+                //la valeur de l'attribut password de notre objet resultat
                 $this->password = $result->password;
                 //On passe notre variable à true, pour dire qu'il n'y a pas d'erreur
                 $isOk = true;
             }
         }
-        //Si $isOk est à false, aucune condition n'est remplie, il y a une erreur, on pourra afficher un message
+        //Si $isOk est à false, aucune condition n'est remplie, il y a une erreur, 
+        //on pourra afficher un message
         //Si elle est à true, toutes les conditions sont remplies est on pourra executer la suite
         return $isOk;
     }
@@ -148,7 +136,8 @@ class users extends database {
      * @return INT
      */
     public function checkUser() {
-        $select = 'SELECT COUNT(*) AS `exists` FROM `annaliumStatera_users` WHERE `login` = :login';
+        $select = 'SELECT COUNT(*) AS `exists` FROM `annaliumStatera_users` '
+                . 'WHERE `login` = :login';
         $queryPrepare = $this->pdo->prepare($select);
         $queryPrepare->bindValue(':login', $this->login, PDO::PARAM_STR);
         $queryPrepare->execute();

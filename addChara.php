@@ -26,10 +26,17 @@ include_once 'controller/addCharaCtrl.php';
       <h2>Ajouter/modifier un personnage</h2>
       <a class="btn btn-primary" href="/">Retour</a>
       <form name="addChara" method="POST" action="index.php?page=characters" class="form-vertical"> <!--enctype="multipart/form-data"-->
+         <!-- Pour chaque champ, s'il y a une erreur, la div prend la classe "has-error"
+              ce qui lui affecte une couleur rouge -->
          <div class="col-xs-12 form-group <?= isset($errorList['lastName']) ? 'has-error' : '' ?>">
             <label class="control-label col-lg-offset-1 col-lg-2" for="lastName">Nom : *</label>
             <div class="col-lg-8">
+               <!-- Dans le cas où l'on accède à cette page via le bouton "Modifier"
+                    on récupère les données du personnage concerné pour qu'elles
+                    s'affichent dans les champs -->
                <input type="text" class="form-control" name="lastName" id="lastName" value="<?= $characters->lastName ?>" required>         
+               <!-- Pour chaque champ, s'il y a une erreur, 
+                    le message d'erreur correspondant s'affiche -->
                <p class="help-block"><?= isset($errorList['lastName']) ? $errorList['lastName'] : '' ?></p>
             </div>
          </div>
@@ -60,7 +67,8 @@ include_once 'controller/addCharaCtrl.php';
                <select name="astroSign" id="astroSign" class="form-control">
                    <?php
                    foreach ($astroSignsList as $astro) {
-                       //Dans l'option on vérifie grâce à un ternaire que la valeur passée en POST($characters->id_tppdo1_departments) est égale à l'option.
+                       //Dans l'option on vérifie grâce à un ternaire que la valeur 
+                       //passée en POST($characters->id_tppdo1_departments) est égale à l'option.
                        ?>     
                       <option value="<?= $astro->id ?>" <?= $astro->id == $characters->astroSignId ? 'selected' : '' ?>><?= $astro->name ?></option>
                       <?php
@@ -75,7 +83,8 @@ include_once 'controller/addCharaCtrl.php';
                <select name="religion" id="religion" class="form-control">
                    <?php
                    foreach ($religionsList as $religion) {
-                       //Dans l'option on vérifie grâce à un ternaire que la valeur passée en POST($characters->id_tppdo1_departments) est égale à l'option.
+                       //Dans l'option on vérifie grâce à un ternaire que la valeur 
+                       //passée en POST($characters->id_tppdo1_departments) est égale à l'option.
                        ?>     
                       <option value="<?= $religion->id ?>" <?= $religion->id == $characters->religionId ? 'selected' : '' ?>><?= $religion->name ?></option>
                       <?php
@@ -90,7 +99,8 @@ include_once 'controller/addCharaCtrl.php';
                <select name="caste" id="caste" class="form-control">
                    <?php
                    foreach ($castesList as $caste) {
-                       //Dans l'option on vérifie grâce à un ternaire que la valeur passée en POST($characters->id_tppdo1_departments) est égale à l'option.
+                       //Dans l'option on vérifie grâce à un ternaire que la valeur 
+                       //passée en POST($characters->id_tppdo1_departments) est égale à l'option.
                        ?>     
                       <option value="<?= $caste->id ?>" <?= $caste->id == $characters->casteId ? 'selected' : '' ?>><?= $caste->name ?></option>
                       <?php

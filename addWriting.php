@@ -14,6 +14,7 @@ include_once 'controller/writingsCtrl.php';
 <html>
    <head>
       <meta charset="UTF-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
       <title>Ajouter un récit | Annalium Statera</title>
    </head>
    <body>

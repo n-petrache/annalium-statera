@@ -4,7 +4,7 @@
  * Modèle de la table characters.
  * Ce modèle est la réplique de la table.
  * Ici je la déclare
- * Le mot clé extends permet de dire que la classe users hérite de la classe database
+ * Le mot clé extends permet de dire que la classe characters hérite de la classe database
  */
 class characters extends database {
 
@@ -92,7 +92,8 @@ class characters extends database {
      * @return boolean
      */
     public function addChara() {
-        $query = 'INSERT INTO `annaliumStatera_characters` (`id`, `lastName`, `firstName`, `age`, `birthday`, `astroSignId`, `religionId`, `casteId`, `portraitFile`, `description`) '
+        $query = 'INSERT INTO `annaliumStatera_characters` '
+                . '(`id`, `lastName`, `firstName`, `age`, `birthday`, `astroSignId`, `religionId`, `casteId`, `portraitFile`, `description`) '
                 . 'VALUES (NULL, :lastName, :firstName, :age, :birthday, :astroSignId, :religionId, :casteId, :portraitFile, :description);';
         $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':lastName', $this->lastName, PDO::PARAM_STR);
@@ -113,7 +114,8 @@ class characters extends database {
      */
     public function modifyChara() {
         $query = 'UPDATE `annaliumStatera_characters` '
-                . 'SET `lastName` = :lastName, `firstName` = :firstName, `age` = :age, `birthday` = :birthday, `astroSignId` = :astroSignId, `religionId` = :religionId, `casteId` = :casteId, `portraitFile` = :portraitFile, `description` = :description WHERE `id` = :id ';
+                . 'SET `lastName` = :lastName, `firstName` = :firstName, `age` = :age, `birthday` = :birthday, `astroSignId` = :astroSignId, `religionId` = :religionId, `casteId` = :casteId, `portraitFile` = :portraitFile, `description` = :description '
+                . 'WHERE `id` = :id ';
         $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':lastName', $this->lastName, PDO::PARAM_STR);
         $queryResult->bindValue(':firstName', $this->firstName, PDO::PARAM_STR);

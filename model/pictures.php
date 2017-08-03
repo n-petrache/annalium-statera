@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modèle de la table trivias
+ * Modèle de la table pictures
  */
 class pictures extends database {
 
@@ -17,13 +17,15 @@ class pictures extends database {
     }
 
     public function getPicsList() {
-        $query = 'SELECT `id`, `name`, `fileName`, `categoryId`, `description` FROM `annaliumStatera_pictures`';
+        $query = 'SELECT `id`, `name`, `fileName`, `categoryId`, `description` '
+                . 'FROM `annaliumStatera_pictures`';
         $queryResult = $this->pdo->query($query);
         return $queryResult->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function getPicById() {
-        $query = 'SELECT `name`, `fileName`, `categoryId`, `description` FROM `annaliumStatera_pictures` WHERE `id` = :id';
+        $query = 'SELECT `name`, `fileName`, `categoryId`, `description` '
+                . 'FROM `annaliumStatera_pictures` WHERE `id` = :id';
         $queryResult = $this->pdo->prepare($query);
         $queryResult->bindValue(':id', $this->id, PDO::PARAM_INT);
         if ($queryResult->execute()) {

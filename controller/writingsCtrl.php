@@ -8,13 +8,13 @@ if (isset($_GET['deleteWritingId']) && is_numeric($_GET['deleteWritingId'])) {
     $writings->id = $_GET['deleteWritingId'];
     $writings->deleteWriting();
 }
-//Si on appuie sur le bouton modifier dans la page writings
-if (isset($_GET['modifyWritingId'])) {
-    //on passe à l'attribut la valeur de l'id du récit à modifier
-    $writings->id = $_GET['modifyWritingId'];
-    //on récupère les infos du récit
-    $writings->getTriviaById();
-}
+////Si on appuie sur le bouton modifier dans la page writings
+//if (isset($_GET['modifyWritingId'])) {
+//    //on passe à l'attribut la valeur de l'id du récit à modifier
+//    $writings->id = $_GET['modifyWritingId'];
+//    //on récupère les infos du récit
+//    $writings->getTriviaById();
+//}
 
 $regexFile = '/^[-a-z\p{L}\s-]+\.pdf$/';
 
@@ -50,12 +50,12 @@ if (isset($_POST['addWriting'])) {
             }
         } else if (!is_numeric($_POST['id'])) {
             $message = WRITING_ERROR;
-        } else {
-            if ($writings->modifyWriting()) {
-                $message = WRITING_SUCCESS_MODIFY;
-            } else {
-                $message = WRITING_ERROR_MODIFY;
-            }
+//        } else {
+//            if ($writings->modifyWriting()) {
+//                $message = WRITING_SUCCESS_MODIFY;
+//            } else {
+//                $message = WRITING_ERROR_MODIFY;
+//            }
         }
     }
 }

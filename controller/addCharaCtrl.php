@@ -1,28 +1,28 @@
 <?php
 
-//Instanciation de la classe departments
+//Instanciation de la classe astroSigns
 $astroSigns = new astroSigns();
-//appel de la méthode getDepartmentsList pour pouvoir construire la liste déroulante
+//Appel de la méthode getAstroSignsList pour pouvoir construire la liste déroulante
 $astroSignsList = $astroSigns->getAstroSignsList();
 
 //Instanciation de la classe religions
 $religions = new religions();
-//appel de la méthode getReligionsList pour pouvoir construire la liste déroulante
+//Appel de la méthode getReligionsList pour pouvoir construire la liste déroulante
 $religionsList = $religions->getReligionsList();
 
-//Instanciation de la classe religions
+//Instanciation de la classe castes
 $castes = new castes();
-//appel de la méthode getReligionsList pour pouvoir construire la liste déroulante
+//Appel de la méthode getCastesList pour pouvoir construire la liste déroulante
 $castesList = $castes->getCastesList();
 
-//Instanciation de la classe user
+//Instanciation de la classe characters
 $characters = new characters();
 
 //Si on appuie sur le bouton modifier dans la page characters
 if (isset($_GET['modifyCharaId'])) {
-    //on passe à l'attribut la valeur de l'id du personnage à modifier
+    //On passe à l'attribut la valeur de l'id du personnage à modifier
     $characters->id = $_GET['modifyCharaId'];
-    //on récupère les infos du personnage
+    //On récupère les infos du personnage
     $characters->getCharaById();
 }
 
@@ -34,6 +34,7 @@ $regexFile = '/^Néant$|^[-a-z\p{L}\s-]+\.png$/';
 //déclaration d'un tableau d'erreur
 $errorList = array();
 $message = '';
+//On vérifie qu'on a bien cliqué sur le bouton d'ajout
 if (isset($_POST['addChara'])) {
     if (!empty($_POST['lastName'])) {
         $characters->lastName = strip_tags($_POST['lastName']);

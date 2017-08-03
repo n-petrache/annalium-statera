@@ -2,7 +2,7 @@
 
 /**
  * Classe permettant de se connecter à la base de données.
- * Ses enfants hériterons de ses méthodes et attributs et protected ou public.
+ * Ses enfants hériteront de ses méthodes et attributs en protected ou public.
  */
 class database {
 

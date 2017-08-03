@@ -24,10 +24,12 @@ if (isset($_POST['subscribe'])) {
     //On vérifie si les $_POST password et confirmPassword sont bien rempli et qu'ils sont bien identiques
     if (!empty($_POST['passwordI']) && !empty($_POST['confirmPasswordI']) && $_POST['passwordI'] == $_POST['confirmPasswordI']) {
         //Si tout va bien, on stocke dans l'attribut password de l'objet user, la version chiffrée du mot de passe
-        //On chiffre le mot de passe avec la fonction password_hash qui prend en paramètre le mot de passe envoyée et la méthode de chiffrement (cf PHP.net)
+        //On chiffre le mot de passe avec la fonction password_hash qui prend en paramètre le mot de passe envoyé 
+        //et la méthode de chiffrement (cf PHP.net)
         $users->password = password_hash($_POST['passwordI'], PASSWORD_BCRYPT);
     } else {
-        //Si un des $_POST est vide ou que les mots de passes ne sont pas identiques, on passe $userError à true (nous permet d'afficher notre message d'erreur dans la vue)
+        //Si un des $_POST est vide ou que les mots de passes ne sont pas identiques, 
+        //on passe $userError à true (nous permet d'afficher notre message d'erreur dans la vue)
         $userError = true;
     }
     if (!empty($_POST['groupId'])) {

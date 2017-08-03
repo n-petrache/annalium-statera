@@ -35,7 +35,8 @@ class writings extends database {
     }
 
     public function addWriting() {
-        $insert = 'INSERT INTO `annaliumStatera_writings` (`title`,`fileName`) VALUES (:title, :fileName)';
+        $insert = 'INSERT INTO `annaliumStatera_writings` (`title`,`fileName`) '
+                . 'VALUES (:title, :fileName)';
         $queryPrepare = $this->pdo->prepare($insert);
         $queryPrepare->bindValue(':title', $this->title, PDO::PARAM_STR);
         $queryPrepare->bindValue(':fileName', $this->fileName, PDO::PARAM_STR);

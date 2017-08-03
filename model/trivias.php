@@ -35,7 +35,8 @@ class trivias extends database {
     }
 
     public function addTrivia() {
-        $insert = 'INSERT INTO `annaliumStatera_trivias` (`title`,`description`) VALUES (:title, :description)';
+        $insert = 'INSERT INTO `annaliumStatera_trivias` (`title`,`description`) '
+                . 'VALUES (:title, :description)';
         $queryPrepare = $this->pdo->prepare($insert);
         $queryPrepare->bindValue(':title', $this->title, PDO::PARAM_STR);
         $queryPrepare->bindValue(':description', $this->description, PDO::PARAM_STR);
