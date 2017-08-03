@@ -24,6 +24,9 @@ if (isset($_SESSION['pseudoC'])) {
 ?>
 <div class="container-fluid">
     <?php
+    //Pour chaque image renseignée dans la base de donnée on affiche 
+    //une miniature avec le nom en dessous
+    //Si on clique sur la miniature, on affiche l'image en taille réelle
     foreach ($picsList as $pic) {
         ?>
        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="text-align: center">
@@ -32,6 +35,8 @@ if (isset($_SESSION['pseudoC'])) {
           </a>
           <span><?= $pic->name ?></span>
           <?php
+          //Si l'utilisateur est connecté et qu'il s'agit de l'administrateur (Noya-Mai)
+          //Un bouton de suppression s'affiche pour chaque image
           if (isset($_SESSION['pseudoC']) && $_SESSION['pseudoC'] == 'Noya-Mai') {
               ?>
               <a class="btn btn-danger" href="?deletePicId=<?= $pic->id ?>">Supprimer</a>
