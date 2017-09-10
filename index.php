@@ -188,17 +188,17 @@ include_once 'controller/galleryCtrl.php';
             <div id="main-window" class="col-md-offset-1 col-md-10">
                <?php
                $page = isset($_GET['page']) ? $_GET['page'] : "main";
-               $nom_page = $page . ".php";
+               $page_name = $page . ".php";
                $rep = "./";
                $dir = opendir($rep);
                $page_exist = 0;
                while (FALSE !== ($file = readdir($dir))) {
-                   if ($file == $nom_page) {
+                   if ($file == $page_name) {
                        $page_exist = 1;
                    }
                }
                if ($page_exist == 1) {
-                   include_once($nom_page);
+                   include_once($page_name);
                } else {
                    include_once("main.php");
                }
